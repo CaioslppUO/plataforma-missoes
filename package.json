@@ -1,0 +1,22 @@
+{
+  "name": "plataforma-agrobot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaioslppUO/plataforma-agrobot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaioslppUO/plataforma-agrobot/issues"
+  },
+  "homepage": "https://github.com/CaioslppUO/plataforma-agrobot#readme",
+  "dependencies": {
+    "strapi": "^3.6.10"
+  }
+}
