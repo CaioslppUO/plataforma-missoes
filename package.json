@@ -1,22 +1,30 @@
 {
-  "name": "plataforma-agrobot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "my-project",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CaioslppUO/plataforma-agrobot.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CaioslppUO/plataforma-agrobot/issues"
-  },
-  "homepage": "https://github.com/CaioslppUO/plataforma-agrobot#readme",
   "dependencies": {
-    "strapi": "^3.6.10"
-  }
+    "@strapi/plugin-documentation": "^4.1.11",
+    "@strapi/plugin-i18n": "4.1.9",
+    "@strapi/plugin-users-permissions": "4.1.9",
+    "@strapi/strapi": "4.1.9",
+    "better-sqlite3": "7.4.6"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "51ef9dc1-ea6e-4c27-953e-7d99502674ec"
+  },
+  "engines": {
+    "node": ">=12.x.x <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
 }
