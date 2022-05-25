@@ -26,7 +26,11 @@ module.exports = createCoreController('api::project.project',
                 const entry = await strapi.db.query('plugin::users-permissions.user').findOne({
                     where: { projects: data[i].id }
                 })
-                data[i].attributes.user = {id: entry.id, name: entry.username}
+                if(entry !== null) {
+                    data[i].attributes.user = {id: entry.id, name: entry.username}
+                } else {
+                    data[i].attributes.user = { }
+                }
             }
             return data;
         },
@@ -34,7 +38,7 @@ module.exports = createCoreController('api::project.project',
         async find(args) {
             args.query = { ...args.query, local: "en" };
             const { data, meta } = await super.find(args);
-
+            
             let res = await this.getUserId(data);
             return { res };
         }
