@@ -4,7 +4,8 @@
   "info": {
     "singularName": "action-type",
     "pluralName": "action-types",
-    "displayName": "ActionType"
+    "displayName": "ActionType",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,7 +16,8 @@
       "type": "string",
       "required": true,
       "maxLength": 45,
-      "minLength": 1
+      "minLength": 1,
+      "unique": true
     },
     "actionDescription": {
       "type": "string",
@@ -26,7 +28,7 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::action.action",
-      "mappedBy": "action_type"
+      "mappedBy": "actionType"
     }
   }
 }

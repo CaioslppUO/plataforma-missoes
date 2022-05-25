@@ -4,7 +4,8 @@
   "info": {
     "singularName": "project",
     "pluralName": "projects",
-    "displayName": "Project"
+    "displayName": "Project",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,23 +16,24 @@
       "type": "string",
       "required": true,
       "minLength": 1,
-      "maxLength": 255
+      "maxLength": 255,
+      "unique": true
     },
     "projectDate": {
       "type": "date",
       "required": true
-    },
-    "profile": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::profile.profile",
-      "inversedBy": "projects"
     },
     "missions": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::mission.mission",
       "mappedBy": "project"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "projects"
     }
   }
 }

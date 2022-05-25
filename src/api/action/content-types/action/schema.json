@@ -4,14 +4,15 @@
   "info": {
     "singularName": "action",
     "pluralName": "actions",
-    "displayName": "Action"
+    "displayName": "Action",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "action_type": {
+    "actionType": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::action-type.action-type",
