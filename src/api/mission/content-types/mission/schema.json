@@ -4,7 +4,8 @@
   "info": {
     "singularName": "mission",
     "pluralName": "missions",
-    "displayName": "Mission"
+    "displayName": "Mission",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,18 @@
       "relation": "oneToMany",
       "target": "api::location.location",
       "mappedBy": "mission"
+    },
+    "missionName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 45,
+      "minLength": 1
+    },
+    "missionType": {
+      "type": "string",
+      "maxLength": 45,
+      "required": true,
+      "minLength": 1
     }
   }
 }

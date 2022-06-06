@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-05-25T20:46:03.488Z"
+    "x-generation-date": "2022-06-06T13:08:32.712Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -853,6 +853,12 @@
                                                                             }
                                                                           }
                                                                         }
+                                                                      },
+                                                                      "missionName": {
+                                                                        "type": "string"
+                                                                      },
+                                                                      "missionType": {
+                                                                        "type": "string"
                                                                       },
                                                                       "createdAt": {
                                                                         "type": "string",
@@ -1909,6 +1915,12 @@
                                                                           }
                                                                         }
                                                                       }
+                                                                    },
+                                                                    "missionName": {
+                                                                      "type": "string"
+                                                                    },
+                                                                    "missionType": {
+                                                                      "type": "string"
                                                                     },
                                                                     "createdAt": {
                                                                       "type": "string",
@@ -3021,6 +3033,12 @@
                                                               }
                                                             }
                                                           },
+                                                          "missionName": {
+                                                            "type": "string"
+                                                          },
+                                                          "missionType": {
+                                                            "type": "string"
+                                                          },
                                                           "createdAt": {
                                                             "type": "string",
                                                             "format": "date-time"
@@ -4068,6 +4086,12 @@
                                                               }
                                                             }
                                                           }
+                                                        },
+                                                        "missionName": {
+                                                          "type": "string"
+                                                        },
+                                                        "missionType": {
+                                                          "type": "string"
                                                         },
                                                         "createdAt": {
                                                           "type": "string",
@@ -5246,6 +5270,12 @@
                                     }
                                   }
                                 },
+                                "missionName": {
+                                  "type": "string"
+                                },
+                                "missionType": {
+                                  "type": "string"
+                                },
                                 "createdAt": {
                                   "type": "string",
                                   "format": "date-time"
@@ -6316,6 +6346,12 @@
                                   }
                                 }
                               },
+                              "missionName": {
+                                "type": "string"
+                              },
+                              "missionType": {
+                                "type": "string"
+                              },
                               "createdAt": {
                                 "type": "string",
                                 "format": "date-time"
@@ -6451,6 +6487,12 @@
             "properties": {
               "missionOrder": {
                 "type": "integer"
+              },
+              "missionName": {
+                "type": "string"
+              },
+              "missionType": {
+                "type": "string"
               }
             }
           }
@@ -7045,6 +7087,12 @@
                                                   }
                                                 }
                                               },
+                                              "missionName": {
+                                                "type": "string"
+                                              },
+                                              "missionType": {
+                                                "type": "string"
+                                              },
                                               "createdAt": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -7443,6 +7491,12 @@
                           }
                         }
                       }
+                    },
+                    "missionName": {
+                      "type": "string"
+                    },
+                    "missionType": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -8107,6 +8161,12 @@
                                                 }
                                               }
                                             },
+                                            "missionName": {
+                                              "type": "string"
+                                            },
+                                            "missionType": {
+                                              "type": "string"
+                                            },
                                             "createdAt": {
                                               "type": "string",
                                               "format": "date-time"
@@ -8505,6 +8565,12 @@
                         }
                       }
                     }
+                  },
+                  "missionName": {
+                    "type": "string"
+                  },
+                  "missionType": {
+                    "type": "string"
                   },
                   "createdAt": {
                     "type": "string",
@@ -9499,6 +9565,12 @@
                                         }
                                       }
                                     }
+                                  },
+                                  "missionName": {
+                                    "type": "string"
+                                  },
+                                  "missionType": {
+                                    "type": "string"
                                   },
                                   "createdAt": {
                                     "type": "string",
@@ -10565,6 +10637,12 @@
                                       }
                                     }
                                   }
+                                },
+                                "missionName": {
+                                  "type": "string"
+                                },
+                                "missionType": {
+                                  "type": "string"
                                 },
                                 "createdAt": {
                                   "type": "string",
@@ -12248,6 +12326,12 @@
                                                                               }
                                                                             }
                                                                           },
+                                                                          "missionName": {
+                                                                            "type": "string"
+                                                                          },
+                                                                          "missionType": {
+                                                                            "type": "string"
+                                                                          },
                                                                           "createdAt": {
                                                                             "type": "string",
                                                                             "format": "date-time"
@@ -13286,6 +13370,12 @@
                                                                             }
                                                                           }
                                                                         },
+                                                                        "missionName": {
+                                                                          "type": "string"
+                                                                        },
+                                                                        "missionType": {
+                                                                          "type": "string"
+                                                                        },
                                                                         "createdAt": {
                                                                           "type": "string",
                                                                           "format": "date-time"
@@ -14277,6 +14367,12 @@
                                                                                               }
                                                                                             }
                                                                                           }
+                                                                                        },
+                                                                                        "missionName": {
+                                                                                          "type": "string"
+                                                                                        },
+                                                                                        "missionType": {
+                                                                                          "type": "string"
                                                                                         },
                                                                                         "createdAt": {
                                                                                           "type": "string",
@@ -15344,6 +15440,12 @@
                                                                                             }
                                                                                           }
                                                                                         }
+                                                                                      },
+                                                                                      "missionName": {
+                                                                                        "type": "string"
+                                                                                      },
+                                                                                      "missionType": {
+                                                                                        "type": "string"
                                                                                       },
                                                                                       "createdAt": {
                                                                                         "type": "string",
@@ -16469,6 +16571,12 @@
                                                                               }
                                                                             }
                                                                           },
+                                                                          "missionName": {
+                                                                            "type": "string"
+                                                                          },
+                                                                          "missionType": {
+                                                                            "type": "string"
+                                                                          },
                                                                           "createdAt": {
                                                                             "type": "string",
                                                                             "format": "date-time"
@@ -17545,6 +17653,12 @@
                                                                               }
                                                                             }
                                                                           }
+                                                                        },
+                                                                        "missionName": {
+                                                                          "type": "string"
+                                                                        },
+                                                                        "missionType": {
+                                                                          "type": "string"
                                                                         },
                                                                         "createdAt": {
                                                                           "type": "string",
