@@ -7,23 +7,23 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex("ActionType").insert([
     {
-      idActionType: 1,
+      id: 1,
       actionName: "Ligar o pulverizador",
       actionDescription: "Liga o pulverizador do robô.",
     },
     {
-      idActionType: 2,
+      id: 2,
       actionName: "Esperar a recarga da bateria",
       actionDescription:
         "Espera que o robô carregue a bateria para prosseguir.",
     },
     {
-      idActionType: 3,
+      id: 3,
       actionName: "Ligar o módulo extra",
       actionDescription: "Ativa o relé que controla o módulo extra do robô.",
     },
     {
-      idActionType: 4,
+      id: 4,
       actionName: "Desligar o robô",
       actionDescription: "Desliga o robô de forma remota",
     },

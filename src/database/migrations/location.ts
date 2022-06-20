@@ -2,7 +2,7 @@ import { Knex } from "knex";
 
 exports.up = function (knex: Knex<any, unknown[]>) {
   return knex.schema.createTable("Location", (tbl) => {
-    tbl.increments("idLocation", { primaryKey: true }).notNullable();
+    tbl.increments("id", { primaryKey: true }).notNullable();
     tbl.double("latitude", 3).notNullable();
     tbl.double("longitude", 3).notNullable();
     tbl.integer("locationOrder").notNullable();
@@ -11,7 +11,7 @@ exports.up = function (knex: Knex<any, unknown[]>) {
       .unsigned()
       .index()
       .notNullable()
-      .references("idMission")
+      .references("id")
       .inTable("Mission");
   });
 };
