@@ -26,6 +26,12 @@ export interface UserType {
    * @returns User.
    */
   findOne: (id: number) => Promise<Object>;
+
+  /**
+   * Return all users.
+   * @return Users.
+   */
+  find: () => Promise<Object[]>;
 }
 
 export interface UserModel {

@@ -32,4 +32,16 @@ describe("Test the user database operations", () => {
       .catch((err) => err);
     expect(Object.keys(res).sort()).toEqual(["userName", "email", "id"].sort());
   });
+
+  test("Should get all users", async () => {
+    let size = await database.raw("SELECT COUNT(*) AS total FROM User;");
+    let res = await user
+      .find()
+      .then((res) => res)
+      .catch((err) => err);
+    expect(size[0].total).toBe(res.length);
+    expect(Object.keys(res[0]).sort()).toEqual(
+      ["userName", "email", "id"].sort()
+    );
+  });
 });

@@ -51,9 +51,23 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     });
   };
 
+  const find = (): Promise<Object[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .find("User")
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
+    find,
   };
 };

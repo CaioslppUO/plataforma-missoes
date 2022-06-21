@@ -76,9 +76,23 @@ export const Crud = (database: Knex<any, unknown[]>): CrudType => {
     });
   };
 
+  const find = (table: string): Promise<Object[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await database
+        .raw(`SELECT * FROM ${table}`)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
+    find,
   };
 };

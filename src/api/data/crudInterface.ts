@@ -32,4 +32,11 @@ export type CrudType = {
    * @returns An object from the database.
    */
   findOne: (table: string, id: number) => Promise<Object>;
+
+  /**
+   * Return all objects in a table.
+   * @param table Table to ge objects from.
+   * @return List with found objects.
+   */
+  find: (table: string) => Promise<Object[]>;
 };
