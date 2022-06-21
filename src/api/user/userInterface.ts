@@ -15,7 +15,7 @@ export interface UserType {
   /**
    * Remove a user.
    * @param idUser id of the user.
-   * @param forceRollBack Force a database rollback after the insert.
+   * @param forceRollBack Force a database rollback after the remove.
    * @returns True if could remove the user.
    */
   remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
@@ -32,6 +32,19 @@ export interface UserType {
    * @return Users.
    */
   find: () => Promise<Object[]>;
+
+  /**
+   * Update an user.
+   * @param id Id of the user.
+   * @param user New value to substitute.
+   * @param forceRollBack Force a database rollback after the update.
+   * @returns True if could update.
+   */
+  update: <type>(
+    id: number,
+    user: type,
+    forceRollBack?: boolean
+  ) => Promise<boolean>;
 }
 
 export interface UserModel {

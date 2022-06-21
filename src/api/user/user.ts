@@ -64,10 +64,28 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     });
   };
 
+  const update = <type>(
+    id: number,
+    user: type,
+    forceRollBack: boolean = false
+  ): Promise<boolean> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .update<type>("User", id, user, forceRollBack)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
     find,
+    update,
   };
 };

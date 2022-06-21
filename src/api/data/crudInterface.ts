@@ -16,7 +16,7 @@ export type CrudType = {
    * Remove from the database.
    * @param table Table to remove from.
    * @param Id to remove.
-   * @param forceRollBack Force a database rollback after the insert.
+   * @param forceRollBack Force a database rollback after the remove.
    * @retuns True if could remove.
    */
   remove: (
@@ -39,4 +39,18 @@ export type CrudType = {
    * @return List with found objects.
    */
   find: (table: string) => Promise<Object[]>;
+
+  /**
+   * Update an object in the database.
+   * @param table Table to update the object.
+   * @param Id of the object to update.
+   * @param data New value to the object.
+   * @param forceRollBack Force a database rollback after the update.
+   */
+  update: <type>(
+    table: string,
+    id: number,
+    data: type,
+    forceRollBack?: boolean
+  ) => Promise<boolean>;
 };

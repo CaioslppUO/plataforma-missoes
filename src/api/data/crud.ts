@@ -89,10 +89,46 @@ export const Crud = (database: Knex<any, unknown[]>): CrudType => {
     });
   };
 
+  const update = <type>(
+    table: string,
+    id: number,
+    data: type,
+    forceRollBack?: boolean
+  ): Promise<boolean> => {
+    return new Promise(async (resolve, rejects) => {
+      if (forceRollBack) {
+        await database.transaction((t) => {
+          t(table)
+            .update(data)
+            .where("id", "=", id)
+            .then(() => {
+              t.rollback();
+              resolve(true);
+            })
+            .catch(() => {
+              t.rollback();
+              rejects(false);
+            });
+        });
+      } else {
+        await database(table)
+          .update(data)
+          .where("id", "=", id)
+          .then(() => {
+            resolve(true);
+          })
+          .catch(() => {
+            rejects(false);
+          });
+      }
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
     find,
+    update,
   };
 };
