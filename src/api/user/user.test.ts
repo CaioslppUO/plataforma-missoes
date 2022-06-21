@@ -65,4 +65,20 @@ describe("Test the user database operations", () => {
       .catch((err) => err);
     expect(res.errno).toBe(19);
   });
+
+  test("Should not insert a user with empty user name", async () => {
+    let res = await user
+      .insert("", "emailemailemail@gmail.com", true)
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid user name");
+  });
+
+  test("Should not insert a user with invalid email", async () => {
+    let res = await user
+      .insert("Name for Error Email", "@gmail.com", true)
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid user email");
+  });
 });

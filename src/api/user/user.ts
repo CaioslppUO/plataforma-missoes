@@ -11,6 +11,9 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      const re = /\S+@\S+\.\S+/;
+      if (!re.test(email)) rejects("invalid user email");
+      if (userName.length <= 0) rejects("invalid user name");
       await crud
         .insert<UserModel>("User", { userName, email }, forceRollBack)
         .then((res) => {
