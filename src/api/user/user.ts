@@ -44,7 +44,7 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
   const findOne = (id: number): Promise<UserModel> => {
     return new Promise(async (resolve, rejects) => {
       await crud
-        .findOne("User", 1)
+        .findOne("User", id)
         .then((res) => {
           resolve(res);
         })

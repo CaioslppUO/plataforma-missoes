@@ -15,6 +15,14 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      await User(database)
+        .findOne(project.idUser)
+        .then((res) => {
+          if (res == undefined) rejects("invalid user id");
+        })
+        .catch(() => {
+          rejects("invalid user id");
+        });
       await crud
         .insert("Project", project, forceRollBack)
         .then((res) => {

@@ -66,4 +66,19 @@ describe("Test the project database operations", () => {
     );
     expect(res).toBe(true);
   });
+
+  test("Should not insert a project with invalid user", async () => {
+    let res = await project
+      .insert(
+        {
+          projectName: "Invalid User Project Name",
+          projectDate: "2022-03-12",
+          idUser: 35,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid user id");
+  });
 });
