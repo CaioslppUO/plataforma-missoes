@@ -59,4 +59,49 @@ describe("Test the mission database operations", () => {
       .catch((err) => err);
     expect(res).toBe(true);
   });
+
+  test("Should not insert a mission with invalid project", async () => {
+    let res = await mission
+      .insert(
+        {
+          missionName: "Invalid Project Mission",
+          missionOrder: 1,
+          idProject: 99,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid project");
+  });
+
+  test("Should not insert a mission with invalid mission order", async () => {
+    let res = await mission
+      .insert(
+        {
+          missionName: "Invalid Mission Order",
+          missionOrder: -1,
+          idProject: 2,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid mission order");
+  });
+
+  test("Should not insert a mission with empty name", async () => {
+    let res = await mission
+      .insert(
+        {
+          missionName: "",
+          missionOrder: 1,
+          idProject: 2,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid mission name");
+  });
 });

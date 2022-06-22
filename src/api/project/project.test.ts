@@ -81,4 +81,49 @@ describe("Test the project database operations", () => {
       .catch((err) => err);
     expect(res).toBe("invalid user id");
   });
+
+  test("Should not insert a project with invalid date", async () => {
+    let res = await project
+      .insert(
+        {
+          projectName: "Invalid Date Project Name",
+          projectDate: "2022-15-05",
+          idUser: 2,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid date");
+  });
+
+  test("Should not insert a project with empty date", async () => {
+    let res = await project
+      .insert(
+        {
+          projectName: "Invalid Date Project Name",
+          projectDate: "",
+          idUser: 2,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid date");
+  });
+
+  test("Should not insert a project with empty name", async () => {
+    let res = await project
+      .insert(
+        {
+          projectName: "",
+          projectDate: "2022-06-05",
+          idUser: 2,
+        },
+        true
+      )
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid project name");
+  });
 });

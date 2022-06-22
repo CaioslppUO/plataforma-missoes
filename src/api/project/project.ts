@@ -23,6 +23,20 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
         .catch(() => {
           rejects("invalid user id");
         });
+      let year = project.projectDate.split("-")[0];
+      let month = project.projectDate.split("-")[1];
+      let day = project.projectDate.split("-")[2];
+      if (
+        year.length != 4 ||
+        month.length != 2 ||
+        day.length != 2 ||
+        Number(month) > 12 ||
+        Number(month) <= 0 ||
+        Number(day) > 31 ||
+        Number(day) <= 0
+      )
+        rejects("invalid date");
+      if (project.projectName.length <= 0) rejects("invalid project name");
       await crud
         .insert("Project", project, forceRollBack)
         .then((res) => {

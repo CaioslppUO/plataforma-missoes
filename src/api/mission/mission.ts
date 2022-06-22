@@ -15,6 +15,18 @@ export const Mission = (database: Knex<any, unknown[]>): MissionType => {
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      await Project(database)
+        .findOne(mission.idProject)
+        .then((res) => {
+          if (res == undefined) {
+            rejects("invalid project");
+          }
+        })
+        .catch((err) => {
+          rejects("invalid project");
+        });
+      if (mission.missionOrder < 0) rejects("invalid mission order");
+      if (mission.missionName.length <= 0) rejects("invalid mission name");
       await crud
         .insert("Mission", mission, forceRollBack)
         .then((res) => {
