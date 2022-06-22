@@ -105,10 +105,28 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
     });
   };
 
+  const update = (
+    id: number,
+    project: ProjectModel,
+    forceRollBack: boolean = false
+  ): Promise<boolean> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .update("Project", id, project, forceRollBack)
+        .then(() => {
+          resolve(true);
+        })
+        .catch(() => {
+          rejects(false);
+        });
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
     find,
+    update,
   };
 };

@@ -45,4 +45,16 @@ export interface ProjectType {
    * @return All Projects.
    */
   find: () => Promise<ProjectModelExtended[]>;
+
+  /**
+   * Update an project in the database.
+   * @param id Id of the project to be updated.
+   * @param project Project to be updated.
+   * @return True if could update.
+   */
+  update: (
+    id: number,
+    project: ProjectModel,
+    forceRollBack?: boolean
+  ) => Promise<boolean>;
 }

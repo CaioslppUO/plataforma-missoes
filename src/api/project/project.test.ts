@@ -51,9 +51,21 @@ describe("Test the project database operations", () => {
       .then((res) => res)
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
-    console.log(res);
     expect(Object.keys(res[0]).sort()).toEqual(
       ["id", "projectName", "projectDate", "user"].sort()
     );
+  });
+
+  test("Should update a project", async () => {
+    let res = await project.update(
+      1,
+      {
+        projectName: "Updated Project Name",
+        projectDate: "2022-05-12",
+        idUser: 5,
+      },
+      true
+    );
+    expect(res).toBe(true);
   });
 });
