@@ -1,8 +1,6 @@
 import { knex } from "knex";
-const config = require("../../../knexfile");
-
 import { Project } from "./project";
-import { ProjectType, ProjectModel } from "./projectInterface";
+const config = require("../../../knexfile");
 
 describe("Test the project database operations", () => {
   const database = knex(config.development);
