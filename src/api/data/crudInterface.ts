@@ -1,4 +1,4 @@
-export type CrudType = {
+export type CrudType<ObjectModel> = {
   /**
    * Insert into the database.
    * @param table Table to insert.
@@ -6,9 +6,9 @@ export type CrudType = {
    * @param forceRollBack Force a database rollback after the insert.
    * @returns Id of the inserted data.
    */
-  insert: <type>(
+  insert: (
     table: string,
-    data: type,
+    data: ObjectModel,
     forceRollBack?: boolean
   ) => Promise<number>;
 
@@ -31,14 +31,14 @@ export type CrudType = {
    * @param id Id of the object.
    * @returns An object from the database.
    */
-  findOne: (table: string, id: number) => Promise<Object>;
+  findOne: (table: string, id: number) => Promise<ObjectModel>;
 
   /**
    * Return all objects in a table.
    * @param table Table to ge objects from.
    * @return List with found objects.
    */
-  find: (table: string) => Promise<Object[]>;
+  find: (table: string) => Promise<ObjectModel[]>;
 
   /**
    * Update an object in the database.
@@ -47,10 +47,10 @@ export type CrudType = {
    * @param data New value to the object.
    * @param forceRollBack Force a database rollback after the update.
    */
-  update: <type>(
+  update: (
     table: string,
     id: number,
-    data: type,
+    data: ObjectModel,
     forceRollBack?: boolean
   ) => Promise<boolean>;
 };

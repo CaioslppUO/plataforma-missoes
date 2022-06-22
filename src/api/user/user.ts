@@ -3,7 +3,7 @@ import { Crud } from "../data/crud";
 import { UserType, UserModel } from "./userInterface";
 
 export const User = (database: Knex<any, unknown[]>): UserType => {
-  const crud = Crud(database);
+  const crud = Crud<UserModel>(database);
 
   const insert = (
     userName: string,
@@ -15,7 +15,7 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
       if (!re.test(email)) rejects("invalid user email");
       if (userName.length <= 0) rejects("invalid user name");
       await crud
-        .insert<UserModel>("User", { userName, email }, forceRollBack)
+        .insert("User", { userName, email }, forceRollBack)
         .then((res) => {
           resolve(res);
         })
@@ -41,7 +41,7 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     });
   };
 
-  const findOne = (id: number): Promise<Object> => {
+  const findOne = (id: number): Promise<UserModel> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("User", 1)
@@ -54,7 +54,7 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     });
   };
 
-  const find = (): Promise<Object[]> => {
+  const find = (): Promise<UserModel[]> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .find("User")
@@ -67,14 +67,14 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     });
   };
 
-  const update = <type>(
+  const update = (
     id: number,
-    user: type,
+    user: UserModel,
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
       await crud
-        .update<type>("User", id, user, forceRollBack)
+        .update("User", id, user, forceRollBack)
         .then((res) => {
           resolve(res);
         })

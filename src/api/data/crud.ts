@@ -1,10 +1,12 @@
 import { CrudType } from "./crudInterface";
 import { Knex } from "knex";
 
-export const Crud = (database: Knex<any, unknown[]>): CrudType => {
-  const insert = <type>(
+export const Crud = <ObjectModel>(
+  database: Knex<any, unknown[]>
+): CrudType<ObjectModel> => {
+  const insert = (
     table: string,
-    data: type,
+    data: ObjectModel,
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
@@ -63,7 +65,7 @@ export const Crud = (database: Knex<any, unknown[]>): CrudType => {
     });
   };
 
-  const findOne = (table: string, id: number): Promise<Object> => {
+  const findOne = (table: string, id: number): Promise<ObjectModel> => {
     return new Promise(async (resolve, rejects) => {
       await database
         .raw(`SELECT * FROM ${table} WHERE id=${id}`)
@@ -76,7 +78,7 @@ export const Crud = (database: Knex<any, unknown[]>): CrudType => {
     });
   };
 
-  const find = (table: string): Promise<Object[]> => {
+  const find = (table: string): Promise<ObjectModel[]> => {
     return new Promise(async (resolve, rejects) => {
       await database
         .raw(`SELECT * FROM ${table}`)
@@ -89,10 +91,10 @@ export const Crud = (database: Knex<any, unknown[]>): CrudType => {
     });
   };
 
-  const update = <type>(
+  const update = (
     table: string,
     id: number,
-    data: type,
+    data: ObjectModel,
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {

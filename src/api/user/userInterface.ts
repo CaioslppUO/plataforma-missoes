@@ -1,3 +1,9 @@
+export interface UserModel {
+  id?: number;
+  userName: string;
+  email: string;
+}
+
 export interface UserType {
   /**
    * Insert a user.
@@ -25,13 +31,13 @@ export interface UserType {
    * @param id User id
    * @returns User.
    */
-  findOne: (id: number) => Promise<Object>;
+  findOne: (id: number) => Promise<UserModel>;
 
   /**
    * Return all users.
    * @return Users.
    */
-  find: () => Promise<Object[]>;
+  find: () => Promise<UserModel[]>;
 
   /**
    * Update an user.
@@ -40,14 +46,9 @@ export interface UserType {
    * @param forceRollBack Force a database rollback after the update.
    * @returns True if could update.
    */
-  update: <type>(
+  update: (
     id: number,
-    user: type,
+    user: UserModel,
     forceRollBack?: boolean
   ) => Promise<boolean>;
-}
-
-export interface UserModel {
-  userName: string;
-  email: string;
 }

@@ -1,7 +1,7 @@
-import { User } from "./user";
 import { knex } from "knex";
-import { UserModel } from "./userInterface";
 const config = require("../../../knexfile");
+import { User } from "./user";
+import { UserModel } from "./userInterface";
 
 describe("Test the user database operations", () => {
   const database = knex(config.development);
@@ -48,7 +48,7 @@ describe("Test the user database operations", () => {
 
   test("Should update a user", async () => {
     let res = await user
-      .update<UserModel>(
+      .update(
         1,
         { userName: "Updated Name", email: "updatedemail@gmail.com" },
         true
