@@ -5,7 +5,7 @@ import { UserModel } from "./userInterface";
 
 describe("Test the user database operations", () => {
   const database = knex(config.development);
-  const user = User(database);
+  const user = User();
 
   test("Should insert a user", async () => {
     let last = await database.raw(
@@ -59,11 +59,14 @@ describe("Test the user database operations", () => {
   });
 
   test("Should not insert a user with duplicated email", async () => {
+    let tblLastIndex = await database.raw(
+      "SELECT id from Location ORDER BY id DESC LIMIT 1;"
+    );
     let res = await user
       .insert("Duplicated Email", "caioslppuo@gmail.com", true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res.errno).toBe(19);
+    expect(res).not.toBe(tblLastIndex[0].id + 1);
   });
 
   test("Should not insert a user with empty user name", async () => {

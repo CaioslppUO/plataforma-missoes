@@ -7,15 +7,15 @@ import { Crud } from "../data/crud";
 import { Project } from "../project/project";
 import { Knex } from "knex";
 
-export const Mission = (database: Knex<any, unknown[]>): MissionType => {
-  const crud = Crud<MissionModel>(database);
+export const Mission = (): MissionType => {
+  const crud = Crud<MissionModel>();
 
   const insert = (
     mission: MissionModel,
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
-      await Project(database)
+      await Project()
         .findOne(mission.idProject)
         .then((res) => {
           if (res == undefined) {
@@ -60,7 +60,7 @@ export const Mission = (database: Knex<any, unknown[]>): MissionType => {
         .find("Mission")
         .then(async (missions) => {
           let res: MissionModelExtended[] = [];
-          let project = Project(database);
+          let project = Project();
           for (let i = 0; i < missions.length; i++) {
             await project
               .findOne(missions[i].idProject)
@@ -89,7 +89,7 @@ export const Mission = (database: Knex<any, unknown[]>): MissionType => {
       await crud
         .findOne("Mission", id)
         .then((mission) => {
-          Project(database)
+          Project()
             .findOne(mission.idProject)
             .then((project) => {
               resolve({
@@ -115,6 +115,18 @@ export const Mission = (database: Knex<any, unknown[]>): MissionType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await Project()
+        .findOne(mission.idProject)
+        .then((res) => {
+          if (res == undefined) {
+            rejects("invalid project");
+          }
+        })
+        .catch((err) => {
+          rejects("invalid project");
+        });
+      if (mission.missionOrder < 0) rejects("invalid mission order");
+      if (mission.missionName.length <= 0) rejects("invalid mission name");
       await crud
         .update("Mission", id, mission, forceRollBack)
         .then((res) => {

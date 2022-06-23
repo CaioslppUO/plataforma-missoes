@@ -7,15 +7,15 @@ import { Knex } from "knex";
 import { User } from "../user/user";
 import { Crud } from "../data/crud";
 
-export const Project = (database: Knex<any, unknown[]>): ProjectType => {
-  const crud = Crud<ProjectModel>(database);
+export const Project = (): ProjectType => {
+  const crud = Crud<ProjectModel>();
 
   const insert = (
     project: ProjectModel,
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
-      await User(database)
+      await User()
         .findOne(project.idUser)
         .then((res) => {
           if (res == undefined) rejects("invalid user id");
@@ -69,7 +69,7 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
       await crud
         .findOne("Project", id)
         .then((project) => {
-          User(database)
+          User()
             .findOne(project.idUser)
             .then((user) => {
               let res: ProjectModelExtended = {
@@ -101,7 +101,7 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
         .then(async (projects) => {
           let res: ProjectModelExtended[] = [];
           for (let i = 0; i < projects.length; i++) {
-            await User(database)
+            await User()
               .findOne(projects[i].idUser)
               .then((user) => {
                 res.push({
@@ -133,6 +133,28 @@ export const Project = (database: Knex<any, unknown[]>): ProjectType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await User()
+        .findOne(project.idUser)
+        .then((res) => {
+          if (res == undefined) rejects("invalid user id");
+        })
+        .catch(() => {
+          rejects("invalid user id");
+        });
+      let year = project.projectDate.split("-")[0];
+      let month = project.projectDate.split("-")[1];
+      let day = project.projectDate.split("-")[2];
+      if (
+        year.length != 4 ||
+        month.length != 2 ||
+        day.length != 2 ||
+        Number(month) > 12 ||
+        Number(month) <= 0 ||
+        Number(day) > 31 ||
+        Number(day) <= 0
+      )
+        rejects("invalid date");
+      if (project.projectName.length <= 0) rejects("invalid project name");
       await crud
         .update("Project", id, project, forceRollBack)
         .then(() => {

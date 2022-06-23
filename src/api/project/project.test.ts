@@ -4,7 +4,7 @@ const config = require("../../../knexfile");
 
 describe("Test the project database operations", () => {
   const database = knex(config.development);
-  const project = Project(database);
+  const project = Project();
 
   test("Should insert a project", async () => {
     let tblLastIndex = await database.raw(

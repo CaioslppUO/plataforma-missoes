@@ -7,15 +7,15 @@ import { Crud } from "../data/crud";
 import { Knex } from "knex";
 import { Mission } from "../mission/mission";
 
-export const Location = (database: Knex<any, unknown[]>): LocationType => {
-  const crud = Crud<LocationModel>(database);
+export const Location = (): LocationType => {
+  const crud = Crud<LocationModel>();
 
   const insert = (
     location: LocationModel,
     forceRollBack?: boolean
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
-      await Mission(database)
+      await Mission()
         .findOne(location.idMission)
         .then((res) => {
           if (res == undefined) rejects("invalid mission");
@@ -53,7 +53,7 @@ export const Location = (database: Knex<any, unknown[]>): LocationType => {
         .find("Location")
         .then(async (locations) => {
           let res: LocationModelExtended[] = [];
-          let mission = Mission(database);
+          let mission = Mission();
           for (let i = 0; i < locations.length; i++) {
             await mission
               .findOne(locations[i].idMission)
@@ -83,7 +83,7 @@ export const Location = (database: Knex<any, unknown[]>): LocationType => {
       await crud
         .findOne("Location", id)
         .then(async (location) => {
-          await Mission(database)
+          await Mission()
             .findOne(location.idMission)
             .then((mission) => {
               resolve({
@@ -110,6 +110,14 @@ export const Location = (database: Knex<any, unknown[]>): LocationType => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await Mission()
+        .findOne(location.idMission)
+        .then((res) => {
+          if (res == undefined) rejects("invalid mission");
+        })
+        .catch((err) => {
+          rejects("invalid mission");
+        });
       await crud
         .update("Location", id, location, forceRollBack)
         .then((res) => {

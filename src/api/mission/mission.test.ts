@@ -4,7 +4,7 @@ const config = require("../../../knexfile");
 
 describe("Test the mission database operations", () => {
   const database = knex(config.development);
-  const mission = Mission(database);
+  const mission = Mission();
 
   test("Should insert a mission", async () => {
     let tblLastIndex = await database.raw(

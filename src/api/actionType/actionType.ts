@@ -2,8 +2,8 @@ import { ActionTypeType, ActionTypeModel } from "./actionTypeInterface";
 import { Crud } from "../data/crud";
 import { Knex } from "knex";
 
-export const ActionType = (database: Knex<any, unknown[]>): ActionTypeType => {
-  const crud = Crud<ActionTypeModel>(database);
+export const ActionType = (): ActionTypeType => {
+  const crud = Crud<ActionTypeModel>();
 
   const insert = (
     actionType: ActionTypeModel,
@@ -70,6 +70,10 @@ export const ActionType = (database: Knex<any, unknown[]>): ActionTypeType => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      if (actionType.actionName.length <= 0)
+        rejects("invalid action type name");
+      if (actionType.actionDescription.length <= 0)
+        rejects("invalid action type description");
       await crud
         .update("ActionType", id, actionType, forceRollBack)
         .then((res) => {

@@ -4,7 +4,7 @@ const config = require("../../../knexfile");
 
 describe("Test the action database operations", () => {
   const database = knex(config.development);
-  const action = Action(database);
+  const action = Action();
 
   test("Should insert an action", async () => {
     let tblLastIndex = await database.raw(

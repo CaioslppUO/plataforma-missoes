@@ -1,9 +1,10 @@
 import { CrudType } from "./crudInterface";
-import { Knex } from "knex";
+import { knex } from "knex";
+const config = require("../../../knexfile");
 
-export const Crud = <ObjectModel>(
-  database: Knex<any, unknown[]>
-): CrudType<ObjectModel> => {
+const database = knex(config.development);
+
+export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
   const insert = (
     table: string,
     data: ObjectModel,
@@ -20,7 +21,11 @@ export const Crud = <ObjectModel>(
             })
             .catch((err) => {
               t.rollback();
-              rejects(err);
+              rejects({
+                error: err.errno,
+                code: err.code,
+                message: err.message,
+              });
             });
         });
       } else {
@@ -29,7 +34,9 @@ export const Crud = <ObjectModel>(
           .then((res) => {
             resolve(res[0]);
           })
-          .catch((err) => rejects(err));
+          .catch((err) => {
+            rejects({ error: err.errno, code: err.code, message: err.message });
+          });
       }
     });
   };
@@ -49,7 +56,11 @@ export const Crud = <ObjectModel>(
             })
             .catch((err) => {
               t.rollback();
-              rejects(err);
+              rejects({
+                error: err.errno,
+                code: err.code,
+                message: err.message,
+              });
             });
         });
       } else {
@@ -59,7 +70,7 @@ export const Crud = <ObjectModel>(
             resolve(true);
           })
           .catch((err) => {
-            rejects(err);
+            rejects({ error: err.errno, code: err.code, message: err.message });
           });
       }
     });
@@ -73,7 +84,7 @@ export const Crud = <ObjectModel>(
           resolve(res[0]);
         })
         .catch((err) => {
-          rejects(err);
+          rejects({ error: err.errno, code: err.code, message: err.message });
         });
     });
   };
@@ -86,7 +97,7 @@ export const Crud = <ObjectModel>(
           resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          rejects({ error: err.errno, code: err.code, message: err.message });
         });
     });
   };
@@ -107,9 +118,13 @@ export const Crud = <ObjectModel>(
               t.rollback();
               resolve(true);
             })
-            .catch(() => {
+            .catch((err) => {
               t.rollback();
-              rejects(false);
+              rejects({
+                error: err.errno,
+                code: err.code,
+                message: err.message,
+              });
             });
         });
       } else {
@@ -119,8 +134,8 @@ export const Crud = <ObjectModel>(
           .then(() => {
             resolve(true);
           })
-          .catch(() => {
-            rejects(false);
+          .catch((err) => {
+            rejects({ error: err.errno, code: err.code, message: err.message });
           });
       }
     });

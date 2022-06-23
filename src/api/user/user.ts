@@ -2,8 +2,8 @@ import { Knex } from "knex";
 import { Crud } from "../data/crud";
 import { UserType, UserModel } from "./userInterface";
 
-export const User = (database: Knex<any, unknown[]>): UserType => {
-  const crud = Crud<UserModel>(database);
+export const User = (): UserType => {
+  const crud = Crud<UserModel>();
 
   const insert = (
     userName: string,
@@ -73,6 +73,9 @@ export const User = (database: Knex<any, unknown[]>): UserType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      const re = /\S+@\S+\.\S+/;
+      if (!re.test(user.email)) rejects("invalid user email");
+      if (user.userName.length <= 0) rejects("invalid user name");
       await crud
         .update("User", id, user, forceRollBack)
         .then((res) => {

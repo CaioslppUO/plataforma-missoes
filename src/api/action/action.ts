@@ -8,15 +8,15 @@ import { ActionType } from "../actionType/actionType";
 import { Crud } from "../data/crud";
 import { Knex } from "knex";
 
-export const Action = (database: Knex<any, unknown[]>): ACTIONTYPE => {
-  const crud = Crud<ActionModel>(database);
+export const Action = (): ACTIONTYPE => {
+  const crud = Crud<ActionModel>();
 
   const insert = (
     action: ActionModel,
     forceRollBack?: boolean
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
-      await ActionType(database)
+      await ActionType()
         .findOne(action.idActionType)
         .then((res) => {
           if (res == undefined) rejects("invalid action type");
@@ -24,7 +24,7 @@ export const Action = (database: Knex<any, unknown[]>): ACTIONTYPE => {
         .catch(() => {
           rejects("invalid action type");
         });
-      await Location(database)
+      await Location()
         .findOne(action.idLocation)
         .then((res) => {
           if (res == undefined) rejects("invalid location");
@@ -61,10 +61,10 @@ export const Action = (database: Knex<any, unknown[]>): ACTIONTYPE => {
       await crud
         .findOne("Action", id)
         .then(async (action) => {
-          await ActionType(database)
+          await ActionType()
             .findOne(action.idActionType)
             .then(async (actionType) => {
-              await Location(database)
+              await Location()
                 .findOne(action.idLocation)
                 .then((location) => {
                   resolve({
@@ -93,8 +93,8 @@ export const Action = (database: Knex<any, unknown[]>): ACTIONTYPE => {
         .find("Action")
         .then(async (actions) => {
           let res: ActionModelExtended[] = [];
-          let actionType = ActionType(database);
-          let location = Location(database);
+          let actionType = ActionType();
+          let location = Location();
           for (let i = 0; i < actions.length; i++) {
             await location
               .findOne(actions[i].idLocation)
@@ -130,6 +130,22 @@ export const Action = (database: Knex<any, unknown[]>): ACTIONTYPE => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await ActionType()
+        .findOne(action.idActionType)
+        .then((res) => {
+          if (res == undefined) rejects("invalid action type");
+        })
+        .catch(() => {
+          rejects("invalid action type");
+        });
+      await Location()
+        .findOne(action.idLocation)
+        .then((res) => {
+          if (res == undefined) rejects("invalid location");
+        })
+        .catch(() => {
+          rejects("invalid location");
+        });
       await crud
         .update("Action", id, action, forceRollBack)
         .then(() => {
