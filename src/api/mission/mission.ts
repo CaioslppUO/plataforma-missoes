@@ -44,7 +44,7 @@ export const Mission = (): MissionType => {
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
       await crud
-        .remove("Mission", 2, true)
+        .remove("Mission", id, forceRollBack)
         .then(() => {
           resolve(true);
         })
@@ -88,8 +88,9 @@ export const Mission = (): MissionType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("Mission", id)
-        .then((mission) => {
-          Project()
+        .then(async (mission) => {
+          if (mission == undefined) rejects("invalid mission id");
+          await Project()
             .findOne(mission.idProject)
             .then((project) => {
               resolve({
@@ -115,6 +116,14 @@ export const Mission = (): MissionType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("Mission", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid mission id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       await Project()
         .findOne(mission.idProject)
         .then((res) => {

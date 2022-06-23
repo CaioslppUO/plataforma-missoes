@@ -68,8 +68,9 @@ export const Project = (): ProjectType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("Project", id)
-        .then((project) => {
-          User()
+        .then(async (project) => {
+          if (project == undefined) rejects("invalid project id");
+          await User()
             .findOne(project.idUser)
             .then((user) => {
               let res: ProjectModelExtended = {
@@ -133,6 +134,14 @@ export const Project = (): ProjectType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("Project", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid project id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       await User()
         .findOne(project.idUser)
         .then((res) => {

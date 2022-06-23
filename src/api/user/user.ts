@@ -73,6 +73,14 @@ export const User = (): UserType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("User", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid user id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       const re = /\S+@\S+\.\S+/;
       if (!re.test(user.email)) rejects("invalid user email");
       if (user.userName.length <= 0) rejects("invalid user name");

@@ -61,6 +61,7 @@ export const Action = (): ACTIONTYPE => {
       await crud
         .findOne("Action", id)
         .then(async (action) => {
+          if (action == undefined) rejects("invalid action id");
           await ActionType()
             .findOne(action.idActionType)
             .then(async (actionType) => {
@@ -130,6 +131,14 @@ export const Action = (): ACTIONTYPE => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("Action", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid action id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       await ActionType()
         .findOne(action.idActionType)
         .then((res) => {

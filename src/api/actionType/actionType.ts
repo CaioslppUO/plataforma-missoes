@@ -70,6 +70,14 @@ export const ActionType = (): ActionTypeType => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("ActionType", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid action type id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       if (actionType.actionName.length <= 0)
         rejects("invalid action type name");
       if (actionType.actionDescription.length <= 0)

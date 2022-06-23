@@ -15,6 +15,7 @@ export const Location = (): LocationType => {
     forceRollBack?: boolean
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      if (location.locationOrder <= 0) rejects("invalid location order");
       await Mission()
         .findOne(location.idMission)
         .then((res) => {
@@ -83,6 +84,7 @@ export const Location = (): LocationType => {
       await crud
         .findOne("Location", id)
         .then(async (location) => {
+          if (location == undefined) rejects("invalid location id");
           await Mission()
             .findOne(location.idMission)
             .then((mission) => {
@@ -110,6 +112,14 @@ export const Location = (): LocationType => {
     forceRollBack?: boolean
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      await crud
+        .findOne("Location", id)
+        .then((res) => {
+          if (res == undefined) rejects("invalid location id");
+        })
+        .catch((err) => {
+          rejects(err);
+        });
       await Mission()
         .findOne(location.idMission)
         .then((res) => {

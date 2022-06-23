@@ -64,10 +64,11 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
             });
         });
       } else {
-        await database
-          .raw(`DELETE FROM ${table} where id=${id}`)
+        await database(table)
+          .where({ id: id })
+          .del()
           .then((res) => {
-            resolve(true);
+            resolve(res >= 1);
           })
           .catch((err) => {
             rejects({ error: err.errno, code: err.code, message: err.message });
@@ -131,7 +132,7 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
         await database(table)
           .update(data)
           .where("id", "=", id)
-          .then(() => {
+          .then((res) => {
             resolve(true);
           })
           .catch((err) => {
