@@ -3,9 +3,9 @@ import {
   ProjectModel,
   ProjectModelExtended,
 } from "./projectInterface";
-import { Knex } from "knex";
 import { User } from "../user/user";
 import { Crud } from "../data/crud";
+import { Mission } from "../mission/mission";
 
 export const Project = (): ProjectType => {
   const crud = Crud<ProjectModel>();
@@ -53,6 +53,14 @@ export const Project = (): ProjectType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      let mission = Mission();
+      await mission.find().then(async (missions) => {
+        for (let i = 0; i < missions.length; i++) {
+          if (missions[i].project.id == id && missions[i].id != undefined) {
+            await mission.remove(Number(missions[i].id), forceRollBack);
+          }
+        }
+      });
       await crud
         .remove("Project", id, forceRollBack)
         .then(() => {

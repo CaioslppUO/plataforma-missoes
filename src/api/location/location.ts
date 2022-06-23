@@ -4,8 +4,8 @@ import {
   LocationModelExtended,
 } from "./locationInterface";
 import { Crud } from "../data/crud";
-import { Knex } from "knex";
 import { Mission } from "../mission/mission";
+import { Action } from "../action/action";
 
 export const Location = (): LocationType => {
   const crud = Crud<LocationModel>();
@@ -37,6 +37,14 @@ export const Location = (): LocationType => {
 
   const remove = (id: number, forceRollBack?: boolean): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
+      let action = Action();
+      await action.find().then(async (actions) => {
+        for (let i = 0; i < actions.length; i++) {
+          if (actions[i].location.id == id && actions[i].id != undefined) {
+            await action.remove(Number(actions[i].id), forceRollBack);
+          }
+        }
+      });
       await crud
         .remove("Location", id, forceRollBack)
         .then((res) => {

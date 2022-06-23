@@ -1,6 +1,6 @@
-import { Knex } from "knex";
 import { Crud } from "../data/crud";
 import { UserType, UserModel } from "./userInterface";
+import { Project } from "../project/project";
 
 export const User = (): UserType => {
   const crud = Crud<UserModel>();
@@ -30,7 +30,15 @@ export const User = (): UserType => {
     forceRollBack: boolean = false
   ): Promise<boolean> => {
     return new Promise(async (resolve, rejects) => {
-      await crud
+      let proj = Project();
+      await proj.find().then(async (projects) => {
+        for (let i = 0; i < projects.length; i++) {
+          if (projects[i].user.id == id && projects[i].id != undefined) {
+            await proj.remove(Number(projects[i].id), forceRollBack);
+          }
+        }
+      });
+      await await crud
         .remove("User", id, forceRollBack)
         .then(() => {
           resolve(true);

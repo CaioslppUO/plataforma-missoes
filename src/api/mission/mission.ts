@@ -66,7 +66,7 @@ export const Mission = (): MissionType => {
               .findOne(missions[i].idProject)
               .then((project) => {
                 res.push({
-                  id: missions[0].id,
+                  id: missions[i].id,
                   missionName: missions[0].missionName,
                   missionOrder: missions[0].missionOrder,
                   project: project,
