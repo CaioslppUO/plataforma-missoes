@@ -1,3 +1,5 @@
+import { ProjectModelExtended } from "../project/projectInterface";
+
 export interface MissionModel {
   id?: number;
   missionOrder: number;
@@ -9,16 +11,7 @@ export interface MissionModelExtended {
   id?: number;
   missionOrder: number;
   missionName: string;
-  project: {
-    id?: number;
-    projectName: string;
-    projectDate: string;
-    user?: {
-      id?: number;
-      userName: string;
-      email: string;
-    };
-  };
+  project: ProjectModelExtended;
 }
 
 export interface MissionType {

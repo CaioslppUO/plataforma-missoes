@@ -1,3 +1,5 @@
+import { MissionModelExtended } from "../mission/missionInterface";
+
 export interface LocationModel {
   id?: number;
   latitude: number;
@@ -11,21 +13,7 @@ export interface LocationModelExtended {
   latitude: number;
   longitude: number;
   locationOrder: number;
-  mission: {
-    id?: number;
-    missionOrder: number;
-    missionName: string;
-    project: {
-      id?: number;
-      projectName: string;
-      projectDate: string;
-      user?: {
-        id?: number;
-        userName: string;
-        email: string;
-      };
-    };
-  };
+  mission: MissionModelExtended;
 }
 
 export interface LocationType {

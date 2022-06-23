@@ -80,19 +80,27 @@ export const Location = (database: Knex<any, unknown[]>): LocationType => {
 
   const findOne = (id: number): Promise<LocationModelExtended> => {
     return new Promise(async (resolve, rejects) => {
-      await crud.findOne("Location", id).then(async (location) => {
-        await Mission(database)
-          .findOne(location.idMission)
-          .then((mission) => {
-            resolve({
-              id: location.id,
-              latitude: location.latitude,
-              longitude: location.longitude,
-              locationOrder: location.locationOrder,
-              mission: mission,
+      await crud
+        .findOne("Location", id)
+        .then(async (location) => {
+          await Mission(database)
+            .findOne(location.idMission)
+            .then((mission) => {
+              resolve({
+                id: location.id,
+                latitude: location.latitude,
+                longitude: location.longitude,
+                locationOrder: location.locationOrder,
+                mission: mission,
+              });
+            })
+            .catch((err) => {
+              rejects(err);
             });
-          });
-      });
+        })
+        .catch((err) => {
+          rejects(err);
+        });
     });
   };
 

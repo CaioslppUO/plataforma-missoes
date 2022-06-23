@@ -1,3 +1,5 @@
+import { UserModel } from "../user/userInterface";
+
 export interface ProjectModel {
   id?: number;
   projectName: string;
@@ -9,11 +11,7 @@ export interface ProjectModelExtended {
   id?: number;
   projectName: string;
   projectDate: string;
-  user?: {
-    id?: number;
-    userName: string;
-    email: string;
-  };
+  user: UserModel;
 }
 
 export interface ProjectType {

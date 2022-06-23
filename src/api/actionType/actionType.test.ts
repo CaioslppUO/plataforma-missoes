@@ -2,7 +2,7 @@ import { knex } from "knex";
 import { ActionType } from "./actionType";
 const config = require("../../../knexfile");
 
-describe("Test the mission database operations", () => {
+describe("Test the action database operations", () => {
   const database = knex(config.development);
   const actionType = ActionType(database);
 
