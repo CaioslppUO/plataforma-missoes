@@ -17,13 +17,13 @@ export type CrudType<ObjectModel> = {
    * @param table Table to remove from.
    * @param Id to remove.
    * @param forceRollBack Force a database rollback after the remove.
-   * @retuns True if could remove.
+   * @return Amount of removed elements.
    */
   remove: (
     table: string,
     id: number,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 
   /**
    * Return the object from the database.
@@ -46,11 +46,12 @@ export type CrudType<ObjectModel> = {
    * @param Id of the object to update.
    * @param data New value to the object.
    * @param forceRollBack Force a database rollback after the update.
+   * @return Amount of updated elements.
    */
   update: (
     table: string,
     id: number,
     data: ObjectModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 };

@@ -12,7 +12,7 @@ router.get("/user", jsonParser, (req: any, res: any) => {
     user
       .find()
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);
@@ -65,12 +65,15 @@ router.delete("/user=:id", jsonParser, (req: any, res: any) => {
     return user
       .remove(req.params.id)
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
+        console.log("Caiu aqui");
+        console.log(err);
         return res.status(400).send(err);
       });
   } catch (err) {
+    console.log(err);
     return res.status(400).send(err);
   }
 });
@@ -83,7 +86,7 @@ router.put("/user", jsonParser, (req: any, res: any) => {
     return user
       .update(req.body.id, { userName: req.body.name, email: req.body.email })
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);

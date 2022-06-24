@@ -45,14 +45,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     table: string,
     id: number,
     forceRollBack: boolean = false
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       if (forceRollBack) {
         await database.transaction((t) => {
           t.raw(`DELETE FROM ${table} where id=${id}`)
             .then((res) => {
               t.rollback();
-              resolve(true);
+              resolve(res);
             })
             .catch((err) => {
               t.rollback();
@@ -68,7 +68,7 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
           .where({ id: id })
           .del()
           .then((res) => {
-            resolve(res >= 1);
+            resolve(res);
           })
           .catch((err) => {
             rejects({ error: err.errno, code: err.code, message: err.message });
@@ -108,16 +108,16 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     id: number,
     data: ObjectModel,
     forceRollBack?: boolean
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       if (forceRollBack) {
         await database.transaction((t) => {
           t(table)
             .update(data)
             .where("id", "=", id)
-            .then(() => {
+            .then((res) => {
               t.rollback();
-              resolve(true);
+              resolve(res);
             })
             .catch((err) => {
               t.rollback();
@@ -133,7 +133,7 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
           .update(data)
           .where("id", "=", id)
           .then((res) => {
-            resolve(true);
+            resolve(res);
           })
           .catch((err) => {
             rejects({ error: err.errno, code: err.code, message: err.message });

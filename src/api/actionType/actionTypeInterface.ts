@@ -20,9 +20,9 @@ export interface ActionTypeType {
    * Remove a actionType from the database.
    * @param id actionType id.
    * @param forceRollBack Force the remotion to suffer rollback.
-   * @return True if could remove the actionType.
+   * @return Number of removed elements.
    */
-  remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
+  remove: (id: number, forceRollBack?: boolean) => Promise<number>;
 
   /**
    * Return all actionTypes.
@@ -42,11 +42,11 @@ export interface ActionTypeType {
    * @param id Id of the actionType.
    * @param actionType New value to set the actionType.
    * @param forceRollBack Force the update to suffer rollback.
-   * @return True if could update.
+   * @return Number of updated elements.
    */
   update: (
     id: number,
     actionType: ActionTypeModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 }

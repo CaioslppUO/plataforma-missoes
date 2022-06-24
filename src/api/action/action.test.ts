@@ -28,7 +28,7 @@ describe("Test the action database operations", () => {
       .remove(1, true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toEqual([]);
   });
 
   test("Should get an action", async () => {
@@ -62,7 +62,7 @@ describe("Test the action database operations", () => {
       },
       true
     );
-    expect(res).toBe(true);
+    expect(res).toBe(1);
   });
 
   test("Should not insert an action with invalid actionType", async () => {

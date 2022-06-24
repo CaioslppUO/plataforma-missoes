@@ -35,7 +35,7 @@ export const Location = (): LocationType => {
     });
   };
 
-  const remove = (id: number, forceRollBack?: boolean): Promise<boolean> => {
+  const remove = (id: number, forceRollBack?: boolean): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       let action = Action();
       await action.find().then(async (actions) => {
@@ -118,8 +118,9 @@ export const Location = (): LocationType => {
     id: number,
     location: LocationModel,
     forceRollBack?: boolean
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      // Verifying if location exists.
       await crud
         .findOne("Location", id)
         .then((res) => {
@@ -128,6 +129,7 @@ export const Location = (): LocationType => {
         .catch((err) => {
           rejects(err);
         });
+      // Verifying if mission exists.
       await Mission()
         .findOne(location.idMission)
         .then((res) => {
@@ -136,6 +138,7 @@ export const Location = (): LocationType => {
         .catch((err) => {
           rejects("invalid mission");
         });
+
       await crud
         .update("Location", id, location, forceRollBack)
         .then((res) => {

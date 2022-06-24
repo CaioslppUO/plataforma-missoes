@@ -51,7 +51,7 @@ export const Project = (): ProjectType => {
   const remove = (
     id: number,
     forceRollBack: boolean = false
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       let mission = Mission();
       await mission.find().then(async (missions) => {
@@ -63,11 +63,11 @@ export const Project = (): ProjectType => {
       });
       await crud
         .remove("Project", id, forceRollBack)
-        .then(() => {
-          resolve(true);
+        .then((res) => {
+          resolve(res);
         })
-        .catch(() => {
-          rejects(false);
+        .catch((err) => {
+          rejects(err);
         });
     });
   };
@@ -140,7 +140,7 @@ export const Project = (): ProjectType => {
     id: number,
     project: ProjectModel,
     forceRollBack: boolean = false
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("Project", id)
@@ -174,11 +174,11 @@ export const Project = (): ProjectType => {
       if (project.projectName.length <= 0) rejects("invalid project name");
       await crud
         .update("Project", id, project, forceRollBack)
-        .then(() => {
-          resolve(true);
+        .then((res) => {
+          resolve(res);
         })
-        .catch(() => {
-          rejects(false);
+        .catch((err) => {
+          rejects(err);
         });
     });
   };

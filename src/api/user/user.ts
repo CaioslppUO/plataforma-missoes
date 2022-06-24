@@ -28,7 +28,7 @@ export const User = (): UserType => {
   const remove = (
     id: number,
     forceRollBack: boolean = false
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       let proj = Project();
       await proj.find().then(async (projects) => {
@@ -40,8 +40,8 @@ export const User = (): UserType => {
       });
       await await crud
         .remove("User", id, forceRollBack)
-        .then(() => {
-          resolve(true);
+        .then((res) => {
+          resolve(res);
         })
         .catch((err) => {
           rejects(err);
@@ -79,7 +79,7 @@ export const User = (): UserType => {
     id: number,
     user: UserModel,
     forceRollBack: boolean = false
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("User", id)

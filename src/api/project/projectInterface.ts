@@ -27,9 +27,9 @@ export interface ProjectType {
    * Remove a project from the database.
    * @param id Id of the project to be deleted.
    * @param forceRollBack Force the remove to suffer rollback.
-   * @return True if could remove.
+   * @return Number of removed elements.
    */
-  remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
+  remove: (id: number, forceRollBack?: boolean) => Promise<number>;
 
   /**
    * Return a project from the database.
@@ -48,11 +48,11 @@ export interface ProjectType {
    * Update an project in the database.
    * @param id Id of the project to be updated.
    * @param project Project to be updated.
-   * @return True if could update.
+   * @return Number of updated elements.
    */
   update: (
     id: number,
     project: ProjectModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 }

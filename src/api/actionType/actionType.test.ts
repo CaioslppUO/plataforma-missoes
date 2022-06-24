@@ -2,7 +2,7 @@ import { knex } from "knex";
 import { ActionType } from "./actionType";
 const config = require("../../../knexfile");
 
-describe("Test the action database operations", () => {
+describe("Test the action type database operations", () => {
   const database = knex(config.development);
   const actionType = ActionType();
 
@@ -28,7 +28,7 @@ describe("Test the action database operations", () => {
       .remove(2, true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toEqual([]);
   });
 
   test("Should get all actionTypes", async () => {
@@ -65,7 +65,7 @@ describe("Test the action database operations", () => {
       )
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toBe(1);
   });
 
   test("Should not insert an actionType with empty name", async () => {

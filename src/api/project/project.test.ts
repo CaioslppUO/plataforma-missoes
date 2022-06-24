@@ -29,7 +29,7 @@ describe("Test the project database operations", () => {
       .remove(1, true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toEqual([]);
   });
 
   test("Should get a project", async () => {
@@ -64,7 +64,7 @@ describe("Test the project database operations", () => {
       },
       true
     );
-    expect(res).toBe(true);
+    expect(res).toBe(1);
   });
 
   test("Should not insert a project with invalid user", async () => {

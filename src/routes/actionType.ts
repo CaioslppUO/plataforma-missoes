@@ -12,7 +12,7 @@ router.get("/actionType", jsonParser, (req: any, res: any) => {
     actionType
       .find()
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);
@@ -71,7 +71,7 @@ router.delete("/actionType=:id", jsonParser, (req: any, res: any) => {
     return actionType
       .remove(req.params.id)
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);

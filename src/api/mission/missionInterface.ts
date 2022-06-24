@@ -27,9 +27,9 @@ export interface MissionType {
    * Remove a mission from the database.
    * @param id Mission id.
    * @param forceRollBack Force the remotion to suffer rollback.
-   * @return True if could remove the mission.
+   * @return Number of removed elements.
    */
-  remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
+  remove: (id: number, forceRollBack?: boolean) => Promise<number>;
 
   /**
    * Return all missions.
@@ -49,11 +49,11 @@ export interface MissionType {
    * @param id Id of the mission.
    * @param mission New value to set the mission.
    * @param forceRollBack Force the update to suffer rollback.
-   * @return True if could update.
+   * @return Number of removed elements.
    */
   update: (
     id: number,
     mission: MissionModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 }

@@ -29,9 +29,9 @@ export interface LocationType {
    * Remove a location from the database.
    * @param id location id.
    * @param forceRollBack Force the remotion to suffer rollback.
-   * @return True if could remove the location.
+   * @return Number of removed elements.
    */
-  remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
+  remove: (id: number, forceRollBack?: boolean) => Promise<number>;
 
   /**
    * Return all locations.
@@ -51,11 +51,11 @@ export interface LocationType {
    * @param id Id of the location.
    * @param location New value to set the location.
    * @param forceRollBack Force the update to suffer rollback.
-   * @return True if could update.
+   * @return Number of updated elements.
    */
   update: (
     id: number,
     location: LocationModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 }

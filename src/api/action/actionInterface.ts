@@ -26,9 +26,9 @@ export interface ActionType {
    * Remove a action from the database.
    * @param id Id of the action to be deleted.
    * @param forceRollBack Force the remove to suffer rollback.
-   * @return True if could remove.
+   * @return Number of removed elements.
    */
-  remove: (id: number, forceRollBack?: boolean) => Promise<boolean>;
+  remove: (id: number, forceRollBack?: boolean) => Promise<number>;
 
   /**
    * Return a action from the database.
@@ -47,11 +47,11 @@ export interface ActionType {
    * Update an action in the database.
    * @param id Id of the action to be updated.
    * @param action action to be updated.
-   * @return True if could update.
+   * @return Number of updated elements.
    */
   update: (
     id: number,
     action: ActionModel,
     forceRollBack?: boolean
-  ) => Promise<boolean>;
+  ) => Promise<number>;
 }

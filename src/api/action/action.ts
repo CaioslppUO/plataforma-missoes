@@ -43,15 +43,15 @@ export const Action = (): ACTIONTYPE => {
     });
   };
 
-  const remove = (id: number, forceRollBack?: boolean): Promise<boolean> => {
+  const remove = (id: number, forceRollBack?: boolean): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .remove("Action", id, forceRollBack)
-        .then(() => {
-          resolve(true);
+        .then((res) => {
+          resolve(res);
         })
-        .catch(() => {
-          rejects(false);
+        .catch((err) => {
+          rejects(err);
         });
     });
   };
@@ -104,7 +104,7 @@ export const Action = (): ACTIONTYPE => {
                   .findOne(actions[i].idActionType)
                   .then((actionType) => {
                     res.push({
-                      id: actions[0].id,
+                      id: actions[i].id,
                       actionType: actionType,
                       location: location,
                     });
@@ -129,8 +129,9 @@ export const Action = (): ACTIONTYPE => {
     id: number,
     action: ActionModel,
     forceRollBack?: boolean
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      // Verifying if the action exists.
       await crud
         .findOne("Action", id)
         .then((res) => {
@@ -139,6 +140,8 @@ export const Action = (): ACTIONTYPE => {
         .catch((err) => {
           rejects(err);
         });
+
+      // Verifying if the actionType exists.
       await ActionType()
         .findOne(action.idActionType)
         .then((res) => {
@@ -147,6 +150,8 @@ export const Action = (): ACTIONTYPE => {
         .catch(() => {
           rejects("invalid action type");
         });
+
+      // Verifying if the location exists.
       await Location()
         .findOne(action.idLocation)
         .then((res) => {
@@ -155,13 +160,15 @@ export const Action = (): ACTIONTYPE => {
         .catch(() => {
           rejects("invalid location");
         });
+
+      // Updating the action
       await crud
         .update("Action", id, action, forceRollBack)
-        .then(() => {
-          resolve(true);
+        .then((res) => {
+          resolve(res);
         })
-        .catch(() => {
-          rejects(false);
+        .catch((err) => {
+          rejects(err);
         });
     });
   };

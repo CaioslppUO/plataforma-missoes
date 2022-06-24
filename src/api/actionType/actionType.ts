@@ -25,7 +25,7 @@ export const ActionType = (): ActionTypeType => {
     });
   };
 
-  const remove = (id: number, forceRollBack?: boolean): Promise<boolean> => {
+  const remove = (id: number, forceRollBack?: boolean): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .remove("ActionType", id, forceRollBack)
@@ -68,8 +68,9 @@ export const ActionType = (): ActionTypeType => {
     id: number,
     actionType: ActionTypeModel,
     forceRollBack?: boolean
-  ): Promise<boolean> => {
+  ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      // Verifying if actionType exists.
       await crud
         .findOne("ActionType", id)
         .then((res) => {
@@ -78,10 +79,13 @@ export const ActionType = (): ActionTypeType => {
         .catch((err) => {
           rejects(err);
         });
+
       if (actionType.actionName.length <= 0)
         rejects("invalid action type name");
+
       if (actionType.actionDescription.length <= 0)
         rejects("invalid action type description");
+
       await crud
         .update("ActionType", id, actionType, forceRollBack)
         .then((res) => {

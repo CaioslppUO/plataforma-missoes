@@ -1,16 +1,12 @@
-require("dotenv").config();
 import * as fs from "fs";
 import { knex } from "knex";
-const config = require("./knexfile");
 
-const database = knex(config.development);
-
+require("dotenv").config();
 var app = require("express")();
-var bodyParser = require("body-parser");
 var server = require("http").Server(app);
-var jsonParser = bodyParser.json();
 const cors = require("cors");
 
+// Server Port
 const port = process.env.PORT || 3333;
 
 // Importing routes
@@ -23,7 +19,10 @@ import * as actionRoute from "./src/routes/action";
 
 // Initialize the database and populate it.
 const initialize_db = (wipe_db: boolean): Promise<void> => {
-  return new Promise(async (resolve, rejects) => {
+  const config = require("./knexfile");
+  const database = knex(config.development);
+
+  return new Promise(async (resolve) => {
     if (!fs.existsSync(__dirname + "/src/database/test.sqlite3")) {
       await database.migrate.latest();
       await database.seed.run();
@@ -37,29 +36,26 @@ const initialize_db = (wipe_db: boolean): Promise<void> => {
 
 // Setup Routes
 initialize_db(true).then(() => {
+  const apiRoute = "/api";
   app.use(cors());
 
-  //app.get("/", jsonParser, (req: any, res: any) => {
-  //  res.sendFile(__dirname + "/index.html");
-  //});
-
   // User routes
-  app.use("/api", userRoute.router);
+  app.use(apiRoute, userRoute.router);
 
   // Project routes
-  app.use("/api", projectRoute.router);
+  app.use(apiRoute, projectRoute.router);
 
   // Mission routes
-  app.use("/api", missionRoute.router);
+  app.use(apiRoute, missionRoute.router);
 
   // LocationRoute routes
-  app.use("/api", locationRoute.router);
+  app.use(apiRoute, locationRoute.router);
 
   // ActionType routes
-  app.use("/api", actionTypeRoute.router);
+  app.use(apiRoute, actionTypeRoute.router);
 
-  // Actione routes
-  app.use("/api", actionRoute.router);
+  // Action routes
+  app.use(apiRoute, actionRoute.router);
 
   server.listen(port, () => {
     console.log(`Listening on :${port}`);

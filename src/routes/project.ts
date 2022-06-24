@@ -12,7 +12,7 @@ router.get("/project", jsonParser, (req: any, res: any) => {
     project
       .find()
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);
@@ -73,7 +73,7 @@ router.delete("/project=:id", jsonParser, (req: any, res: any) => {
     return project
       .remove(req.params.id)
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);
@@ -99,7 +99,7 @@ router.put("/project", jsonParser, (req: any, res: any) => {
         idUser: req.body.idUser,
       })
       .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).json(data);
       })
       .catch((err) => {
         return res.status(400).send(err);

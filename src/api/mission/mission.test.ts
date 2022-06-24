@@ -23,7 +23,7 @@ describe("Test the mission database operations", () => {
       .remove(2, true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toEqual([]);
   });
 
   test("Should get all missions", async () => {
@@ -57,7 +57,7 @@ describe("Test the mission database operations", () => {
       )
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toBe(1);
   });
 
   test("Should not insert a mission with invalid project", async () => {

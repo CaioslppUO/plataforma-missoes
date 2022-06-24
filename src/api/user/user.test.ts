@@ -23,7 +23,7 @@ describe("Test the user database operations", () => {
       .remove(1, true)
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toEqual([]);
   });
 
   test("Should get a user", async () => {
@@ -55,7 +55,7 @@ describe("Test the user database operations", () => {
       )
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(true);
+    expect(res).toBe(1);
   });
 
   test("Should not insert a user with duplicated email", async () => {
