@@ -110,11 +110,18 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     forceRollBack?: boolean
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
+      let keys = Object.keys(data);
+      let values = Object.values(data);
+      let sql = `UPDATE ${table} SET `;
+      for (let i = 0; i < keys.length; i++) {
+        sql += `${keys[i]} = '${values[i]}'`;
+        if (i != keys.length - 1) sql += ", ";
+      }
+      sql += ` WHERE id=${id}`;
+
       if (forceRollBack) {
         await database.transaction((t) => {
-          t(table)
-            .update(data)
-            .where("id", "=", id)
+          t.raw(sql)
             .then((res) => {
               t.rollback();
               resolve(res);
@@ -129,9 +136,8 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
             });
         });
       } else {
-        await database(table)
-          .update(data)
-          .where("id", "=", id)
+        await database
+          .raw(sql)
           .then((res) => {
             resolve(res);
           })

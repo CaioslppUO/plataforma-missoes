@@ -82,3 +82,29 @@ router.delete("/mission=:id", jsonParser, (req: any, res: any) => {
     return res.status(400).send(err);
   }
 });
+
+router.put("/mission", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.body.id) return res.status(400).send("invalid id");
+    if (!req.body.missionName)
+      return res.status(400).send({ error: "invalid missionName" });
+    if (!req.body.missionOrder)
+      return res.status(400).send({ error: "invalid missionOrder" });
+    if (!req.body.idProject)
+      return res.status(400).send({ error: "invalid idProject" });
+    return mission
+      .update(req.body.id, {
+        missionName: req.body.missionName,
+        missionOrder: req.body.missionOrder,
+        idProject: req.body.idProject,
+      })
+      .then((data) => {
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});

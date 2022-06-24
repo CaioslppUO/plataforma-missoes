@@ -86,3 +86,33 @@ router.delete("/location=:id", jsonParser, (req: any, res: any) => {
     return res.status(400).send(err);
   }
 });
+
+router.put("/location", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.body.id) return res.status(400).send("invalid id");
+    if (!req.body.latitude)
+      return res.status(400).send({ error: "invalid latitude" });
+    if (!req.body.longitude)
+      return res.status(400).send({ error: "invalid longitude" });
+    if (!req.body.locationOrder)
+      return res.status(400).send({ error: "invalid locationOrder" });
+    if (!req.body.idMission)
+      return res.status(400).send({ error: "invalid idMission" });
+
+    return location
+      .update(req.body.id, {
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        locationOrder: req.body.locationOrder,
+        idMission: req.body.idMission,
+      })
+      .then((data) => {
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});

@@ -80,3 +80,25 @@ router.delete("/actionType=:id", jsonParser, (req: any, res: any) => {
     return res.status(400).send(err);
   }
 });
+
+router.put("/actionType", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.body.id) return res.status(400).send("invalid id");
+    if (!req.body.actionName) return res.status(400).send("invalid actionName");
+    if (!req.body.actionDescription)
+      return res.status(400).send("invalid actionDescription");
+    return actionType
+      .update(req.body.id, {
+        actionName: req.body.actionName,
+        actionDescription: req.body.actionDescription,
+      })
+      .then((data) => {
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});

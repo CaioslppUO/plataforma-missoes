@@ -62,7 +62,7 @@ describe("Test the action database operations", () => {
       },
       true
     );
-    expect(res).toBe(1);
+    expect(res).toEqual([]);
   });
 
   test("Should not insert an action with invalid actionType", async () => {

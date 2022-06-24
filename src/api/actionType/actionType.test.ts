@@ -65,7 +65,7 @@ describe("Test the action type database operations", () => {
       )
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(1);
+    expect(res).toEqual([]);
   });
 
   test("Should not insert an actionType with empty name", async () => {

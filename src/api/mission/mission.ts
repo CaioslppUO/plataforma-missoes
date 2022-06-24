@@ -67,8 +67,8 @@ export const Mission = (): MissionType => {
               .then((project) => {
                 res.push({
                   id: missions[i].id,
-                  missionName: missions[0].missionName,
-                  missionOrder: missions[0].missionOrder,
+                  missionName: missions[i].missionName,
+                  missionOrder: missions[i].missionOrder,
                   project: project,
                 });
               })

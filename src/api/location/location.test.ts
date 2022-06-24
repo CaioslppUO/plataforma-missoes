@@ -69,7 +69,7 @@ describe("Test the mission database operations", () => {
       )
       .then((res) => res)
       .catch((err) => err);
-    expect(res).toBe(1);
+    expect(res).toEqual([]);
   });
 
   test("Should not insert a location with invalid idMission", async () => {

@@ -64,7 +64,7 @@ describe("Test the project database operations", () => {
       },
       true
     );
-    expect(res).toBe(1);
+    expect(res).toEqual([]);
   });
 
   test("Should not insert a project with invalid user", async () => {
