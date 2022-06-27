@@ -13,7 +13,7 @@ export interface ProjectModelExtended {
   projectName: string;
   projectDate: string;
   user: UserModel;
-  idMissions?: MissionModelExtended[];
+  missions?: MissionModelExtended[];
 }
 
 export interface ProjectType {

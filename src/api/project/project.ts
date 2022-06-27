@@ -79,6 +79,12 @@ export const Project = (): ProjectType => {
         .then(async (project) => {
           if (project == undefined) rejects("invalid project id");
           let missions = await Mission().find();
+          let specificMissions = [];
+          for (let j = 0; j < missions.length; j++) {
+            if (missions[j].idProject == id) {
+              specificMissions.push(missions[j]);
+            }
+          }
           let user = await User().findOne(project.idUser);
           let res: ProjectModelExtended = {
             id: project.id,
@@ -89,7 +95,7 @@ export const Project = (): ProjectType => {
               userName: user.userName,
               email: user.email,
             },
-            idMissions: missions,
+            missions: specificMissions,
           };
           resolve(res);
         })
@@ -106,7 +112,13 @@ export const Project = (): ProjectType => {
         .then(async (projects) => {
           let res: ProjectModelExtended[] = [];
           let missions = await Mission().find();
+          let specificMissions = [];
           for (let i = 0; i < projects.length; i++) {
+            for (let j = 0; j < missions.length; j++) {
+              if (missions[j].idProject == projects[i].id) {
+                specificMissions.push(missions[j]);
+              }
+            }
             let user = await User().findOne(projects[i].idUser);
             res.push({
               id: projects[i].id,
@@ -117,8 +129,9 @@ export const Project = (): ProjectType => {
                 userName: user.userName,
                 email: user.email,
               },
-              idMissions: missions,
+              missions: specificMissions,
             });
+            specificMissions = [];
           }
           resolve(res);
         })
@@ -135,8 +148,14 @@ export const Project = (): ProjectType => {
         .then(async (projects) => {
           let res: ProjectModelExtended[] = [];
           let missions = await Mission().find();
+          let specificMissions = [];
           for (let i = 0; i < projects.length; i++) {
             if (projects[i].idUser == id) {
+              for (let j = 0; j < missions.length; j++) {
+                if (missions[j].idProject == projects[i].id) {
+                  specificMissions.push(missions[j]);
+                }
+              }
               let user = await User().findOne(projects[i].idUser);
               res.push({
                 id: projects[i].id,
@@ -147,9 +166,10 @@ export const Project = (): ProjectType => {
                   userName: user.userName,
                   email: user.email,
                 },
-                idMissions: missions,
+                missions: specificMissions,
               });
             }
+            specificMissions = [];
           }
           resolve(res);
         })
