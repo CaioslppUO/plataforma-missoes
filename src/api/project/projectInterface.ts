@@ -47,6 +47,12 @@ export interface ProjectType {
   find: () => Promise<ProjectModelExtended[]>;
 
   /**
+   * Return all projects from user.
+   * @return All Projects from user.
+   */
+  findByUser: (id: number) => Promise<ProjectModelExtended[]>;
+
+  /**
    * Update an project in the database.
    * @param id Id of the project to be updated.
    * @param project Project to be updated.

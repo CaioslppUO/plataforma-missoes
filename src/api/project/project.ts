@@ -128,6 +128,37 @@ export const Project = (): ProjectType => {
     });
   };
 
+  const findByUser = (id: number): Promise<ProjectModelExtended[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .find("Project")
+        .then(async (projects) => {
+          let res: ProjectModelExtended[] = [];
+          let missions = await Mission().find();
+          for (let i = 0; i < projects.length; i++) {
+            if (projects[i].idUser == id) {
+              let user = await User().findOne(projects[i].idUser);
+              res.push({
+                id: projects[i].id,
+                projectName: projects[i].projectName,
+                projectDate: projects[i].projectDate,
+                user: {
+                  id: user.id,
+                  userName: user.userName,
+                  email: user.email,
+                },
+                idMissions: missions,
+              });
+            }
+          }
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   const update = (
     id: number,
     project: ProjectModel,
@@ -180,6 +211,7 @@ export const Project = (): ProjectType => {
     remove,
     findOne,
     find,
+    findByUser,
     update,
   };
 };

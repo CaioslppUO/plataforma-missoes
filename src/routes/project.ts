@@ -41,6 +41,25 @@ router.get("/project=:id", jsonParser, (req: any, res: any) => {
     return res.status(400).send(err);
   }
 });
+router.get("/projects=:id", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.params.id)
+      return res.status(400).send({ error: "invalid project id" });
+    return project
+      .findByUser(req.params.id)
+      .then((data) => {
+        if (data == undefined) {
+          return res.status(400).send({ error: "invalid project id" });
+        }
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});
 
 router.post("/project", jsonParser, (req: any, res: any) => {
   try {

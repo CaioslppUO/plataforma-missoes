@@ -54,6 +54,20 @@ describe("Test the project database operations", () => {
     );
   });
 
+  test("Should get projects by user", async () => {
+    let size = await database.raw(
+      "SELECT COUNT(*) AS total FROM Project where idUser = 1;"
+    );
+    let res = await project
+      .findByUser(1)
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res.length).toBe(size[0].total);
+    expect(Object.keys(res[0]).sort()).toEqual(
+      ["id", "projectName", "projectDate", "user", "idMissions"].sort()
+    );
+  });
+
   test("Should update a project", async () => {
     let res = await project.update(
       1,
