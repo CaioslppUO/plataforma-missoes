@@ -42,6 +42,26 @@ router.get("/mission=:id", jsonParser, (req: any, res: any) => {
   }
 });
 
+router.get("/missions=:id", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.params.id)
+      return res.status(400).send({ error: "invalid project id" });
+    return mission
+      .findByProject(req.params.id)
+      .then((data) => {
+        if (data == undefined) {
+          return res.status(400).send({ error: "invalid project id" });
+        }
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});
+
 router.post("/mission", jsonParser, (req: any, res: any) => {
   try {
     if (!req.body.missionName)

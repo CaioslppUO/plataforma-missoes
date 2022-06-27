@@ -102,6 +102,20 @@ export const Mission = (): MissionType => {
     });
   };
 
+  const findByProject = (id: number): Promise<MissionModelExtended[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .findBy("Mission", id, "idProject")
+        .then(async (mission) => {
+          if (mission == undefined) rejects("invalid mission id");
+          resolve(mission);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   const update = (
     id: number,
     mission: MissionModel,
@@ -146,6 +160,7 @@ export const Mission = (): MissionType => {
   };
 
   return {
+    findByProject,
     insert,
     remove,
     find,

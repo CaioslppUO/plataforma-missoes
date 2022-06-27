@@ -34,6 +34,18 @@ export type CrudType<ObjectModel> = {
   findOne: (table: string, id: number) => Promise<ObjectModel>;
 
   /**
+   * Return all object in a table where id.
+   * @param table Table to get the object from.
+   * @param id Id of the object.
+   * @returns An object from the database.
+   */
+  findBy: (
+    table: string,
+    id: number,
+    targetCol: string
+  ) => Promise<ObjectModel[]>;
+
+  /**
    * Return all objects in a table.
    * @param table Table to ge objects from.
    * @return List with found objects.

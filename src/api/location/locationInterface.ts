@@ -13,7 +13,6 @@ export interface LocationModelExtended {
   latitude: number;
   longitude: number;
   locationOrder: number;
-  mission: MissionModelExtended;
 }
 
 export interface LocationType {
@@ -45,6 +44,13 @@ export interface LocationType {
    * @return location.
    */
   findOne: (id: number) => Promise<LocationModelExtended>;
+
+  /**
+   * Return all location by mission.
+   * @param id location id.
+   * @return location by mission.
+   */
+  findByMission: (id: number) => Promise<LocationModelExtended[]>;
 
   /**
    * Update a location in the database.

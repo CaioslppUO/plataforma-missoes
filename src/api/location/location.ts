@@ -60,25 +60,21 @@ export const Location = (): LocationType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .find("Location")
-        .then(async (locations) => {
-          let res: LocationModelExtended[] = [];
-          let mission = Mission();
-          for (let i = 0; i < locations.length; i++) {
-            await mission
-              .findOne(locations[i].idMission)
-              .then((mission) => {
-                res.push({
-                  id: locations[i].id,
-                  latitude: locations[i].latitude,
-                  longitude: locations[i].longitude,
-                  locationOrder: locations[i].locationOrder,
-                  mission: mission,
-                });
-              })
-              .catch((err) => {
-                rejects(err);
-              });
-          }
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
+  const findByMission = (id: number): Promise<LocationModelExtended[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .findBy("Location", id, "idMission")
+        .then((res) => {
+          if (res == undefined) rejects("invalid mission id");
           resolve(res);
         })
         .catch((err) => {
@@ -91,22 +87,9 @@ export const Location = (): LocationType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findOne("Location", id)
-        .then(async (location) => {
-          if (location == undefined) rejects("invalid location id");
-          await Mission()
-            .findOne(location.idMission)
-            .then((mission) => {
-              resolve({
-                id: location.id,
-                latitude: location.latitude,
-                longitude: location.longitude,
-                locationOrder: location.locationOrder,
-                mission: mission,
-              });
-            })
-            .catch((err) => {
-              rejects(err);
-            });
+        .then(async (res) => {
+          if (res == undefined) rejects("invalid location id");
+          resolve(res);
         })
         .catch((err) => {
           rejects(err);
@@ -138,7 +121,6 @@ export const Location = (): LocationType => {
         .catch((err) => {
           rejects("invalid mission");
         });
-
       await crud
         .update("Location", id, location, forceRollBack)
         .then((res) => {
@@ -151,6 +133,7 @@ export const Location = (): LocationType => {
   };
 
   return {
+    findByMission,
     insert,
     remove,
     find,

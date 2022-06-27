@@ -43,6 +43,27 @@ router.get("/location=:id", jsonParser, (req: any, res: any) => {
   }
 });
 
+router.get("/locations=:id", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.params.id)
+      return res.status(400).send({ error: "invalid mission id" });
+    return location
+      .findByMission(req.params.id)
+      .then((data) => {
+        if (data == undefined) {
+          return res.status(400).send({ error: "invalid mission id" });
+        }
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});
+
 router.post("/location", jsonParser, (req: any, res: any) => {
   try {
     if (!req.body.latitude)

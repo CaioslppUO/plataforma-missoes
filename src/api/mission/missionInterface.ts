@@ -45,6 +45,13 @@ export interface MissionType {
   findOne: (id: number) => Promise<MissionModelExtended>;
 
   /**
+   * Return all mission by project.
+   * @param id Mission id.
+   * @return Mission by project.
+   */
+  findByProject: (id: number) => Promise<MissionModelExtended[]>;
+
+  /**
    * Update a mission in the database.
    * @param id Id of the mission.
    * @param mission New value to set the mission.

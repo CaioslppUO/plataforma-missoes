@@ -48,6 +48,20 @@ describe("Test the mission database operations", () => {
     );
   });
 
+  test("Should get a mission by project", async () => {
+    let size = await database.raw(
+      "SELECT COUNT(*) AS total FROM Mission where idProject = 2;"
+    );
+    let res = await mission
+      .findByProject(2)
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res.length).toBe(size[0].total);
+    expect(Object.keys(res[0]).sort()).toEqual(
+      ["id", "missionName", "missionOrder", "idProject"].sort()
+    );
+  });
+
   test("Should update a mission", async () => {
     let res = await mission
       .update(

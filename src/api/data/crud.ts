@@ -103,6 +103,23 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     });
   };
 
+  const findBy = (
+    table: string,
+    id: number,
+    targetCol: string
+  ): Promise<ObjectModel[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await database
+        .raw(`SELECT * FROM ${table} WHERE ${targetCol}=${id}`)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects({ error: err.errno, code: err.code, message: err.message });
+        });
+    });
+  };
+
   const update = (
     table: string,
     id: number,
@@ -148,11 +165,5 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     });
   };
 
-  return {
-    insert,
-    remove,
-    findOne,
-    find,
-    update,
-  };
+  return { findBy, insert, remove, findOne, find, update };
 };

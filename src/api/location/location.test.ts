@@ -33,6 +33,20 @@ describe("Test the mission database operations", () => {
     expect(res).toEqual([]);
   });
 
+  test("Should get specific locations", async () => {
+    let size = await database.raw(
+      "SELECT COUNT(*) AS total FROM Location where idMission = 1;"
+    );
+    let res = await location
+      .findByMission(1)
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res.length).toBe(size[0].total);
+    expect(Object.keys(res[0]).sort()).toEqual(
+      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
+    );
+  });
+
   test("Should get all locations", async () => {
     let size = await database.raw("SELECT COUNT(*) AS total FROM Location;");
     let res = await location
@@ -41,7 +55,7 @@ describe("Test the mission database operations", () => {
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
     expect(Object.keys(res[0]).sort()).toEqual(
-      ["id", "latitude", "longitude", "locationOrder", "mission"].sort()
+      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
     );
   });
 
@@ -51,7 +65,7 @@ describe("Test the mission database operations", () => {
       .then((res) => res)
       .catch((err) => err);
     expect(Object.keys(res).sort()).toEqual(
-      ["id", "latitude", "longitude", "locationOrder", "mission"].sort()
+      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
     );
   });
 
