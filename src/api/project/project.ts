@@ -56,7 +56,7 @@ export const Project = (): ProjectType => {
       let mission = Mission();
       await mission.find().then(async (missions) => {
         for (let i = 0; i < missions.length; i++) {
-          if (missions[i].project.id == id && missions[i].id != undefined) {
+          if (missions[i].idProject == id && missions[i].id != undefined) {
             await mission.remove(Number(missions[i].id), forceRollBack);
           }
         }
@@ -78,24 +78,20 @@ export const Project = (): ProjectType => {
         .findOne("Project", id)
         .then(async (project) => {
           if (project == undefined) rejects("invalid project id");
-          await User()
-            .findOne(project.idUser)
-            .then((user) => {
-              let res: ProjectModelExtended = {
-                id: project.id,
-                projectName: project.projectName,
-                projectDate: project.projectDate,
-                user: {
-                  id: user.id,
-                  userName: user.userName,
-                  email: user.email,
-                },
-              };
-              resolve(res);
-            })
-            .catch((err) => {
-              rejects(err);
-            });
+          let missions = await Mission().find();
+          let user = await User().findOne(project.idUser);
+          let res: ProjectModelExtended = {
+            id: project.id,
+            projectName: project.projectName,
+            projectDate: project.projectDate,
+            user: {
+              id: user.id,
+              userName: user.userName,
+              email: user.email,
+            },
+            idMissions: missions,
+          };
+          resolve(res);
         })
         .catch((err) => {
           rejects(err);
@@ -109,24 +105,20 @@ export const Project = (): ProjectType => {
         .find("Project")
         .then(async (projects) => {
           let res: ProjectModelExtended[] = [];
+          let missions = await Mission().find();
           for (let i = 0; i < projects.length; i++) {
-            await User()
-              .findOne(projects[i].idUser)
-              .then((user) => {
-                res.push({
-                  id: projects[i].id,
-                  projectName: projects[i].projectName,
-                  projectDate: projects[i].projectDate,
-                  user: {
-                    id: user.id,
-                    userName: user.userName,
-                    email: user.email,
-                  },
-                });
-              })
-              .catch((err) => {
-                rejects(err);
-              });
+            let user = await User().findOne(projects[i].idUser);
+            res.push({
+              id: projects[i].id,
+              projectName: projects[i].projectName,
+              projectDate: projects[i].projectDate,
+              user: {
+                id: user.id,
+                userName: user.userName,
+                email: user.email,
+              },
+              idMissions: missions,
+            });
           }
           resolve(res);
         })

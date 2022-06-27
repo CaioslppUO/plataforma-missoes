@@ -60,21 +60,13 @@ export const Mission = (): MissionType => {
         .find("Mission")
         .then(async (missions) => {
           let res: MissionModelExtended[] = [];
-          let project = Project();
           for (let i = 0; i < missions.length; i++) {
-            await project
-              .findOne(missions[i].idProject)
-              .then((project) => {
-                res.push({
-                  id: missions[i].id,
-                  missionName: missions[i].missionName,
-                  missionOrder: missions[i].missionOrder,
-                  project: project,
-                });
-              })
-              .catch((err) => {
-                rejects(err);
-              });
+            res.push({
+              id: missions[i].id,
+              missionName: missions[i].missionName,
+              missionOrder: missions[i].missionOrder,
+              idProject: missions[i].idProject,
+            });
           }
           resolve(res);
         })
@@ -97,7 +89,7 @@ export const Mission = (): MissionType => {
                 id: mission.id,
                 missionName: mission.missionName,
                 missionOrder: mission.missionOrder,
-                project: project,
+                idProject: project.id,
               });
             })
             .catch((err) => {

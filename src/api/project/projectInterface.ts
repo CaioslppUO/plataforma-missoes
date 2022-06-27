@@ -1,4 +1,5 @@
 import { UserModel } from "../user/userInterface";
+import { MissionModelExtended } from "../mission/missionInterface";
 
 export interface ProjectModel {
   id?: number;
@@ -12,6 +13,7 @@ export interface ProjectModelExtended {
   projectName: string;
   projectDate: string;
   user: UserModel;
+  idMissions?: MissionModelExtended[];
 }
 
 export interface ProjectType {

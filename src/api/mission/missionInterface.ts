@@ -11,7 +11,7 @@ export interface MissionModelExtended {
   id?: number;
   missionOrder: number;
   missionName: string;
-  project: ProjectModelExtended;
+  idProject?: number;
 }
 
 export interface MissionType {

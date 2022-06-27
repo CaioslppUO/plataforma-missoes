@@ -38,7 +38,7 @@ describe("Test the project database operations", () => {
       .then((res) => res)
       .catch((err) => err);
     expect(Object.keys(res).sort()).toEqual(
-      ["id", "projectName", "projectDate", "user"].sort()
+      ["id", "projectName", "projectDate", "user", "idMissions"].sort()
     );
   });
 
@@ -50,7 +50,7 @@ describe("Test the project database operations", () => {
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
     expect(Object.keys(res[0]).sort()).toEqual(
-      ["id", "projectName", "projectDate", "user"].sort()
+      ["id", "projectName", "projectDate", "user", "idMissions"].sort()
     );
   });
 
