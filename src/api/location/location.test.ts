@@ -2,7 +2,7 @@ import { knex } from "knex";
 import { Location } from "./location";
 const config = require("../../../knexfile");
 
-describe("Test the mission database operations", () => {
+describe("Test the location database operations", () => {
   const database = knex(config.development);
   const location = Location();
 
@@ -43,7 +43,14 @@ describe("Test the mission database operations", () => {
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
     expect(Object.keys(res[0]).sort()).toEqual(
-      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
+      [
+        "id",
+        "latitude",
+        "longitude",
+        "locationOrder",
+        "idMission",
+        "actions",
+      ].sort()
     );
   });
 
@@ -55,7 +62,14 @@ describe("Test the mission database operations", () => {
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
     expect(Object.keys(res[0]).sort()).toEqual(
-      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
+      [
+        "id",
+        "latitude",
+        "longitude",
+        "locationOrder",
+        "idMission",
+        "actions",
+      ].sort()
     );
   });
 
@@ -65,7 +79,14 @@ describe("Test the mission database operations", () => {
       .then((res) => res)
       .catch((err) => err);
     expect(Object.keys(res).sort()).toEqual(
-      ["id", "latitude", "longitude", "locationOrder", "idMission"].sort()
+      [
+        "id",
+        "latitude",
+        "longitude",
+        "locationOrder",
+        "idMission",
+        "actions",
+      ].sort()
     );
   });
 

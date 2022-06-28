@@ -1,4 +1,4 @@
-import { ProjectModelExtended } from "../project/projectInterface";
+import { LocationModelExtended } from "../location/locationInterface";
 
 export interface MissionModel {
   id?: number;
@@ -12,6 +12,7 @@ export interface MissionModelExtended {
   missionOrder: number;
   missionName: string;
   idProject?: number;
+  locations?: LocationModelExtended[];
 }
 
 export interface MissionType {

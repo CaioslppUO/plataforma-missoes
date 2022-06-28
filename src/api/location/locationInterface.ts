@@ -1,3 +1,4 @@
+import { ActionModelExtended } from "../action/actionInterface";
 import { MissionModelExtended } from "../mission/missionInterface";
 
 export interface LocationModel {
@@ -13,6 +14,7 @@ export interface LocationModelExtended {
   latitude: number;
   longitude: number;
   locationOrder: number;
+  actions?: ActionModelExtended[];
 }
 
 export interface LocationType {

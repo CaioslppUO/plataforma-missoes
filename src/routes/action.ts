@@ -43,6 +43,27 @@ router.get("/action=:id", jsonParser, (req: any, res: any) => {
   }
 });
 
+router.get("/actions=:id", jsonParser, (req: any, res: any) => {
+  try {
+    if (!req.params.id)
+      return res.status(400).send({ error: "invalid action id" });
+    return action
+      .findByLocation(req.params.id)
+      .then((data) => {
+        if (data == undefined) {
+          return res.status(400).send({ error: "invalid action id" });
+        }
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});
+
 router.post("/action", jsonParser, (req: any, res: any) => {
   try {
     if (!req.body.idActionType)

@@ -6,6 +6,7 @@ import {
 import { Crud } from "../data/crud";
 import { Project } from "../project/project";
 import { Knex } from "knex";
+import { Location } from "../location/location";
 
 export const Mission = (): MissionType => {
   const crud = Crud<MissionModel>();
@@ -60,13 +61,19 @@ export const Mission = (): MissionType => {
         .find("Mission")
         .then(async (missions) => {
           let res: MissionModelExtended[] = [];
+          let currentMission;
           for (let i = 0; i < missions.length; i++) {
-            res.push({
-              id: missions[i].id,
-              missionName: missions[i].missionName,
-              missionOrder: missions[i].missionOrder,
-              idProject: missions[i].idProject,
-            });
+            currentMission = missions[i];
+            if (currentMission.id) {
+              let locations = await Location().findByMission(currentMission.id);
+              res.push({
+                id: missions[i].id,
+                missionName: missions[i].missionName,
+                missionOrder: missions[i].missionOrder,
+                idProject: missions[i].idProject,
+                locations: locations,
+              });
+            }
           }
           resolve(res);
         })
@@ -82,19 +89,16 @@ export const Mission = (): MissionType => {
         .findOne("Mission", id)
         .then(async (mission) => {
           if (mission == undefined) rejects("invalid mission id");
-          await Project()
-            .findOne(mission.idProject)
-            .then((project) => {
-              resolve({
-                id: mission.id,
-                missionName: mission.missionName,
-                missionOrder: mission.missionOrder,
-                idProject: project.id,
-              });
-            })
-            .catch((err) => {
-              rejects(err);
+          if (mission.id) {
+            let locations = await Location().findByMission(mission.id);
+            resolve({
+              id: mission.id,
+              missionName: mission.missionName,
+              missionOrder: mission.missionOrder,
+              idProject: mission.idProject,
+              locations: locations,
             });
+          }
         })
         .catch((err) => {
           rejects(err);
@@ -106,9 +110,24 @@ export const Mission = (): MissionType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findBy("Mission", id, "idProject")
-        .then(async (mission) => {
-          if (mission == undefined) rejects("invalid mission id");
-          resolve(mission);
+        .then(async (missions) => {
+          if (missions == undefined) rejects("invalid mission id");
+          let res: MissionModelExtended[] = [];
+          let currentMission;
+          for (let i = 0; i < missions.length; i++) {
+            currentMission = missions[i];
+            if (currentMission.id) {
+              let locations = await Location().findByMission(currentMission.id);
+              res.push({
+                id: missions[i].id,
+                missionName: missions[i].missionName,
+                missionOrder: missions[i].missionOrder,
+                idProject: missions[i].idProject,
+                locations: locations,
+              });
+            }
+          }
+          resolve(res);
         })
         .catch((err) => {
           rejects(err);

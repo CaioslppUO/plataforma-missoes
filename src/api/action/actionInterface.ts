@@ -10,7 +10,7 @@ export interface ActionModel {
 export interface ActionModelExtended {
   id?: number;
   actionType: ActionTypeModel;
-  location: LocationModelExtended;
+  idLocation: number;
 }
 
 export interface ActionType {
@@ -36,6 +36,13 @@ export interface ActionType {
    * @return action.
    */
   findOne: (id: number) => Promise<ActionModelExtended>;
+
+  /**
+   * Return a action from the database.
+   * @param id Id of the action to return.
+   * @return action.
+   */
+  findByLocation: (id: number) => Promise<ActionModelExtended[]>;
 
   /**
    * Return all actions.

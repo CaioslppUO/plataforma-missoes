@@ -6,6 +6,7 @@ import {
 import { Crud } from "../data/crud";
 import { Mission } from "../mission/mission";
 import { Action } from "../action/action";
+import { ActionModelExtended } from "../action/actionInterface";
 
 export const Location = (): LocationType => {
   const crud = Crud<LocationModel>();
@@ -40,7 +41,7 @@ export const Location = (): LocationType => {
       let action = Action();
       await action.find().then(async (actions) => {
         for (let i = 0; i < actions.length; i++) {
-          if (actions[i].location.id == id && actions[i].id != undefined) {
+          if (actions[i].idLocation == id && actions[i].id != undefined) {
             await action.remove(Number(actions[i].id), forceRollBack);
           }
         }
@@ -60,8 +61,17 @@ export const Location = (): LocationType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .find("Location")
-        .then((res) => {
-          resolve(res);
+        .then(async (res: LocationModel[]) => {
+          let locations: LocationModelExtended[] = [];
+          let actions: ActionModelExtended[];
+          for (let i = 0; i < res.length; i++) {
+            let currentAction = res[i];
+            if (currentAction.id != undefined) {
+              actions = await Action().findByLocation(currentAction.id);
+              locations.push({ ...res[i], actions: actions });
+            } else rejects("Undefined Location in database");
+          }
+          resolve(locations);
         })
         .catch((err) => {
           rejects(err);
@@ -73,9 +83,18 @@ export const Location = (): LocationType => {
     return new Promise(async (resolve, rejects) => {
       await crud
         .findBy("Location", id, "idMission")
-        .then((res) => {
+        .then(async (res) => {
           if (res == undefined) rejects("invalid mission id");
-          resolve(res);
+          let locations: LocationModelExtended[] = [];
+          let actions: ActionModelExtended[];
+          for (let i = 0; i < res.length; i++) {
+            let currentAction = res[i];
+            if (currentAction.id != undefined) {
+              actions = await Action().findByLocation(currentAction.id);
+              locations.push({ ...res[i], actions: actions });
+            } else rejects("Undefined Location in database");
+          }
+          resolve(locations);
         })
         .catch((err) => {
           rejects(err);
@@ -89,7 +108,13 @@ export const Location = (): LocationType => {
         .findOne("Location", id)
         .then(async (res) => {
           if (res == undefined) rejects("invalid location id");
-          resolve(res);
+          let locations: LocationModelExtended = res;
+          let actions: ActionModelExtended[];
+          if (res.id != undefined) {
+            actions = await Action().findByLocation(res.id);
+            locations.actions = actions;
+          }
+          resolve(locations);
         })
         .catch((err) => {
           rejects(err);

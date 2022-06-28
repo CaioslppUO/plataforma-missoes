@@ -65,18 +65,11 @@ export const Action = (): ACTIONTYPE => {
           await ActionType()
             .findOne(action.idActionType)
             .then(async (actionType) => {
-              await Location()
-                .findOne(action.idLocation)
-                .then((location) => {
-                  resolve({
-                    id: action.id,
-                    actionType: actionType,
-                    location: location,
-                  });
-                })
-                .catch((err) => {
-                  rejects(err);
-                });
+              resolve({
+                id: action.id,
+                actionType: actionType,
+                idLocation: action.idLocation,
+              });
             })
             .catch((err) => {
               rejects(err);
@@ -95,23 +88,45 @@ export const Action = (): ACTIONTYPE => {
         .then(async (actions) => {
           let res: ActionModelExtended[] = [];
           let actionType = ActionType();
-          let location = Location();
           for (let i = 0; i < actions.length; i++) {
-            await location
-              .findOne(actions[i].idLocation)
-              .then(async (location) => {
-                await actionType
-                  .findOne(actions[i].idActionType)
-                  .then((actionType) => {
-                    res.push({
-                      id: actions[i].id,
-                      actionType: actionType,
-                      location: location,
-                    });
-                  })
-                  .catch((err) => {
-                    rejects(err);
-                  });
+            await actionType
+              .findOne(actions[i].idActionType)
+              .then((actionType) => {
+                res.push({
+                  id: actions[i].id,
+                  actionType: actionType,
+                  idLocation: actions[i].idLocation,
+                });
+              })
+              .catch((err) => {
+                rejects(err);
+              });
+          }
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
+  const findByLocation = (id: number): Promise<ActionModelExtended[]> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .findBy("Action", id, "idLocation")
+        .then(async (actions) => {
+          if (actions == undefined) rejects("invalid mission id");
+          let res: ActionModelExtended[] = [];
+          let actionType = ActionType();
+          for (let i = 0; i < actions.length; i++) {
+            await actionType
+              .findOne(actions[i].idActionType)
+              .then((actionType) => {
+                res.push({
+                  id: actions[i].id,
+                  actionType: actionType,
+                  idLocation: actions[i].idLocation,
+                });
               })
               .catch((err) => {
                 rejects(err);
@@ -175,6 +190,7 @@ export const Action = (): ACTIONTYPE => {
 
   return {
     insert,
+    findByLocation,
     remove,
     find,
     findOne,

@@ -37,7 +37,7 @@ describe("Test the action database operations", () => {
       .then((res) => res)
       .catch((err) => err);
     expect(Object.keys(res).sort()).toEqual(
-      ["id", "actionType", "location"].sort()
+      ["id", "actionType", "idLocation"].sort()
     );
   });
 
@@ -49,7 +49,7 @@ describe("Test the action database operations", () => {
       .catch((err) => err);
     expect(res.length).toBe(size[0].total);
     expect(Object.keys(res[0]).sort()).toEqual(
-      ["id", "actionType", "location"].sort()
+      ["id", "actionType", "idLocation"].sort()
     );
   });
 
