@@ -2,9 +2,10 @@ import * as fs from "fs";
 import { knex } from "knex";
 
 require("dotenv").config();
-var app = require("express")();
-var server = require("http").Server(app);
+const app = require("express")();
+const server = require("http").Server(app);
 const cors = require("cors");
+const morgan = require("morgan");
 
 // Server Port
 const port = process.env.PORT || 3333;
@@ -38,6 +39,7 @@ const initialize_db = (wipe_db: boolean): Promise<void> => {
 initialize_db(true).then(() => {
   const apiRoute = "/api";
   app.use(cors());
+  app.use(morgan("dev"));
 
   // User routes
   app.use(apiRoute, userRoute.router);
