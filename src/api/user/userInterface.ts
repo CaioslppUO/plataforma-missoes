@@ -2,6 +2,7 @@ export interface UserModel {
   id?: number;
   userName: string;
   email: string;
+  firebaseId: string;
 }
 
 export interface UserType {
@@ -9,12 +10,14 @@ export interface UserType {
    * Insert a user.
    * @param userName User name.
    * @param email User email.
+   * @param firebaseId Id from firebase auth.
    * @param forceRollBack Force a database rollback after the insert.
    * @returns Id of the inserted user.
    */
   insert: (
     userName: string,
     email: string,
+    firebaseId: string,
     forceRollBack?: boolean
   ) => Promise<number>;
 

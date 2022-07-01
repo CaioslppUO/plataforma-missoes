@@ -94,6 +94,7 @@ export const Project = (): ProjectType => {
               id: user.id,
               userName: user.userName,
               email: user.email,
+              firebaseId: user.firebaseId,
             },
             missions: specificMissions,
           };
@@ -128,6 +129,7 @@ export const Project = (): ProjectType => {
                 id: user.id,
                 userName: user.userName,
                 email: user.email,
+                firebaseId: user.firebaseId,
               },
               missions: specificMissions,
             });
@@ -165,6 +167,7 @@ export const Project = (): ProjectType => {
                   id: user.id,
                   userName: user.userName,
                   email: user.email,
+                  firebaseId: user.firebaseId,
                 },
                 missions: specificMissions,
               });

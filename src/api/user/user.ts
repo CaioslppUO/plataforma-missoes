@@ -8,14 +8,16 @@ export const User = (): UserType => {
   const insert = (
     userName: string,
     email: string,
+    firebaseId: string,
     forceRollBack: boolean = false
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       const re = /\S+@\S+\.\S+/;
       if (!re.test(email)) rejects("invalid user email");
       if (userName.length <= 0) rejects("invalid user name");
+      if (firebaseId.length <= 0) rejects("invalid firebase id");
       await crud
-        .insert("User", { userName, email }, forceRollBack)
+        .insert("User", { userName, email, firebaseId }, forceRollBack)
         .then((res) => {
           resolve(res);
         })
@@ -92,6 +94,7 @@ export const User = (): UserType => {
       const re = /\S+@\S+\.\S+/;
       if (!re.test(user.email)) rejects("invalid user email");
       if (user.userName.length <= 0) rejects("invalid user name");
+      if (user.firebaseId.length <= 0) rejects("invalid firebase id");
       await crud
         .update("User", id, user, forceRollBack)
         .then((res) => {

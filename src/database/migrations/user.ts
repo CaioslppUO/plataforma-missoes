@@ -5,6 +5,7 @@ exports.up = function (knex: Knex<any, unknown[]>) {
     tbl.increments("id", { primaryKey: true }).notNullable();
     tbl.string("userName", 255).notNullable();
     tbl.string("email", 255).notNullable().unique();
+    tbl.string("firebaseId").notNullable().unique();
   });
 };
 

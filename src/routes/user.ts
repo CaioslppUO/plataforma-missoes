@@ -46,8 +46,10 @@ router.post("/user", jsonParser, (req: any, res: any) => {
     if (!req.body.name) return res.status(400).send({ error: "invalid name" });
     if (!req.body.email)
       return res.status(400).send({ error: "invalid email" });
+    if (!req.body.firebaseId)
+      return res.status(400).send({ error: "invalid firebaseId" });
     return user
-      .insert(req.body.name, req.body.email)
+      .insert(req.body.name, req.body.email, req.body.firebaseId)
       .then((data) => {
         return res.status(200).json(data);
       })
@@ -83,8 +85,14 @@ router.put("/user", jsonParser, (req: any, res: any) => {
     if (!req.body.id) return res.status(400).send("invalid id");
     if (!req.body.name) return res.status(400).send("invalid name");
     if (!req.body.email) return res.status(400).send("invalid email");
+    if (!req.body.firebaseId)
+      return res.status(400).send({ error: "invalid firebaseId" });
     return user
-      .update(req.body.id, { userName: req.body.name, email: req.body.email })
+      .update(req.body.id, {
+        userName: req.body.name,
+        email: req.body.email,
+        firebaseId: req.body.firebaseId,
+      })
       .then((data) => {
         return res.status(200).json(data);
       })
