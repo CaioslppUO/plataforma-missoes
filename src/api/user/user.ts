@@ -106,11 +106,25 @@ export const User = (): UserType => {
     });
   };
 
+  const getIdByFirebaseId = (firebaseId: string): Promise<number> => {
+    return new Promise(async (resolve, rejects) => {
+      await crud
+        .findIdByFirebaseId(firebaseId)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          rejects(err);
+        });
+    });
+  };
+
   return {
     insert,
     remove,
     findOne,
     find,
     update,
+    getIdByFirebaseId,
   };
 };

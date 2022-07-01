@@ -66,4 +66,11 @@ export type CrudType<ObjectModel> = {
     data: ObjectModel,
     forceRollBack?: boolean
   ) => Promise<number>;
+
+  /**
+   * Get an user Id by its firebaseId.
+   * @param firebaseId Id from firebase auth.
+   * @return User id.
+   */
+  findIdByFirebaseId: (firebaseId: string) => Promise<number>;
 };

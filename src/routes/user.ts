@@ -103,3 +103,21 @@ router.put("/user", jsonParser, (req: any, res: any) => {
     return res.status(400).send(err);
   }
 });
+
+router.get("/user/firebaseId=:id", jsonParser, (req: any, res: any) => {
+  if (!req.params.id)
+    return res.status(400).send({ error: "invalid firebase id" });
+  try {
+    return user
+      .getIdByFirebaseId(req.params.id)
+      .then((data) => {
+        return res.status(200).json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(400).send(err);
+      });
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+});

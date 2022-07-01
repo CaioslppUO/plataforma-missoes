@@ -54,4 +54,11 @@ export interface UserType {
     user: UserModel,
     forceRollBack?: boolean
   ) => Promise<number>;
+
+  /**
+   * Get an user Id by its firebaseId.
+   * @param firebaseId Id from firebase auth.
+   * @return User id.
+   */
+  getIdByFirebaseId: (firebaseId: string) => Promise<number>;
 }

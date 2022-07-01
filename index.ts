@@ -36,7 +36,7 @@ const initialize_db = (wipe_db: boolean): Promise<void> => {
 };
 
 // Setup Routes
-initialize_db(true).then(() => {
+initialize_db(false).then(() => {
   const apiRoute = "/api";
   app.use(cors());
   app.use(morgan("dev"));

@@ -165,5 +165,16 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     });
   };
 
-  return { findBy, insert, remove, findOne, find, update };
+  const findIdByFirebaseId = (firebaseId: string): Promise<number> => {
+    return new Promise(async (resolve, rejects) => {
+      let res = await database
+        .raw(`SELECT id FROM User WHERE firebaseId='${firebaseId}';`)
+        .catch((err) => {
+          rejects(err);
+        });
+      resolve(res[0].id);
+    });
+  };
+
+  return { findBy, insert, remove, findOne, find, update, findIdByFirebaseId };
 };
