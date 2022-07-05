@@ -19,16 +19,15 @@ import * as actionTypeRoute from "./src/routes/actionType";
 import * as actionRoute from "./src/routes/action";
 
 // Initialize the database and populate it.
-const initialize_db = (wipe_db: boolean): Promise<void> => {
+const initialize_db = (wipe_db: boolean, populate: boolean): Promise<void> => {
   const config = require("./knexfile");
   const database = knex(config.development);
 
   return new Promise(async (resolve) => {
     if (!fs.existsSync(__dirname + "/src/database/test.sqlite3")) {
       await database.migrate.latest();
-      await database.seed.run();
     }
-    if (wipe_db) {
+    if (populate) {
       await database.seed.run();
     }
     resolve();
@@ -36,7 +35,7 @@ const initialize_db = (wipe_db: boolean): Promise<void> => {
 };
 
 // Setup Routes
-initialize_db(false).then(() => {
+initialize_db(false, false).then(() => {
   const apiRoute = "/api";
   app.use(cors());
   app.use(morgan("dev"));
