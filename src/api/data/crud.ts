@@ -17,11 +17,11 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
             .insert(data)
             .then((res) => {
               t.rollback();
-              resolve(res[0]);
+              return resolve(res[0]);
             })
             .catch((err) => {
               t.rollback();
-              rejects({
+              return rejects({
                 error: err.errno,
                 code: err.code,
                 message: err.message,
@@ -32,10 +32,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
         await database(table)
           .insert(data)
           .then((res) => {
-            resolve(res[0]);
+            return resolve(res[0]);
           })
           .catch((err) => {
-            rejects({ error: err.errno, code: err.code, message: err.message });
+            return rejects({
+              error: err.errno,
+              code: err.code,
+              message: err.message,
+            });
           });
       }
     });
@@ -52,11 +56,11 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
           t.raw(`DELETE FROM ${table} where id=${id}`)
             .then((res) => {
               t.rollback();
-              resolve(res);
+              return resolve(res);
             })
             .catch((err) => {
               t.rollback();
-              rejects({
+              return rejects({
                 error: err.errno,
                 code: err.code,
                 message: err.message,
@@ -68,10 +72,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
           .where({ id: id })
           .del()
           .then((res) => {
-            resolve(res);
+            return resolve(res);
           })
           .catch((err) => {
-            rejects({ error: err.errno, code: err.code, message: err.message });
+            return rejects({
+              error: err.errno,
+              code: err.code,
+              message: err.message,
+            });
           });
       }
     });
@@ -82,10 +90,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
       await database
         .raw(`SELECT * FROM ${table} WHERE id=${id}`)
         .then((res) => {
-          resolve(res[0]);
+          return resolve(res[0]);
         })
         .catch((err) => {
-          rejects({ error: err.errno, code: err.code, message: err.message });
+          return rejects({
+            error: err.errno,
+            code: err.code,
+            message: err.message,
+          });
         });
     });
   };
@@ -95,10 +107,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
       await database
         .raw(`SELECT * FROM ${table}`)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects({ error: err.errno, code: err.code, message: err.message });
+          return rejects({
+            error: err.errno,
+            code: err.code,
+            message: err.message,
+          });
         });
     });
   };
@@ -112,10 +128,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
       await database
         .raw(`SELECT * FROM ${table} WHERE ${targetCol}=${id}`)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects({ error: err.errno, code: err.code, message: err.message });
+          return rejects({
+            error: err.errno,
+            code: err.code,
+            message: err.message,
+          });
         });
     });
   };
@@ -141,11 +161,11 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
           t.raw(sql)
             .then((res) => {
               t.rollback();
-              resolve(res);
+              return resolve(res);
             })
             .catch((err) => {
               t.rollback();
-              rejects({
+              return rejects({
                 error: err.errno,
                 code: err.code,
                 message: err.message,
@@ -156,10 +176,14 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
         await database
           .raw(sql)
           .then((res) => {
-            resolve(res);
+            return resolve(res);
           })
           .catch((err) => {
-            rejects({ error: err.errno, code: err.code, message: err.message });
+            return rejects({
+              error: err.errno,
+              code: err.code,
+              message: err.message,
+            });
           });
       }
     });
