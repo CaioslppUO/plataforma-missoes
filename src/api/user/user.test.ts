@@ -105,4 +105,12 @@ describe("Test the user database operations", () => {
       .catch((err) => err);
     expect(res).toBe("invalid user email");
   });
+
+  test("Should return an error if firebaseid is not found", async () => {
+    let res = await user
+      .getIdByFirebaseId("invalid_firebase_id")
+      .then((res) => res)
+      .catch((err) => err);
+    expect(res).toBe("invalid firebase id");
+  });
 });

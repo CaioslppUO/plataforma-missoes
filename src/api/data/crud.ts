@@ -170,9 +170,10 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
       let res = await database
         .raw(`SELECT id FROM User WHERE firebaseId='${firebaseId}';`)
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
-      resolve(res[0].id);
+      if (res.length === 0) return rejects("invalid firebase id");
+      return resolve(res[0].id);
     });
   };
 
