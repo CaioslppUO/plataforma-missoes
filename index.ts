@@ -1,11 +1,14 @@
 import * as fs from "fs";
 import { knex } from "knex";
+import { Crud } from "./src/api/data/crud";
 
 require("dotenv").config();
 const app = require("express")();
 const server = require("http").Server(app);
 const cors = require("cors");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const jsonParser = bodyParser.json();
 
 // Server Port
 const port = process.env.PORT || 3333;
@@ -39,6 +42,29 @@ initialize_db(false, false).then(() => {
   const apiRoute = "/api";
   app.use(cors());
   app.use(morgan("dev"));
+
+  // Reset database route
+  app.post("/wipe", jsonParser, (req: any, res: any) => {
+    try {
+      if (!req.body.password)
+        return res.status(400).json({ error: "no password in body" });
+      if (req.body.password == "this is not a password") {
+        let crud = Crud<any>();
+        crud
+          .wipeDatabase()
+          .then((data) => {
+            return res.status(200).json(data);
+          })
+          .catch((err) => {
+            return res.status(200).json(err);
+          });
+      } else {
+        return res.status(400).json({ error: "invalid password" });
+      }
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+  });
 
   // User routes
   app.use(apiRoute, userRoute.router);

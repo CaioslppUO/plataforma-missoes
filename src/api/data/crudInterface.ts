@@ -73,4 +73,10 @@ export type CrudType<ObjectModel> = {
    * @return User id.
    */
   findIdByFirebaseId: (firebaseId: string) => Promise<number>;
+
+  /**
+   * Wipe all tables in database. Only ActionType is not wiped.
+   * @return True if could wipe.
+   */
+  wipeDatabase: () => Promise<boolean>;
 };

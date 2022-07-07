@@ -201,5 +201,29 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
     });
   };
 
-  return { findBy, insert, remove, findOne, find, update, findIdByFirebaseId };
+  const wipeDatabase = (): Promise<boolean> => {
+    return new Promise(async (resolve, rejects) => {
+      try {
+        await database.raw("DELETE FROM User;");
+        await database.raw("DELETE FROM Project;");
+        await database.raw("DELETE FROM Mission;");
+        await database.raw("DELETE FROM Location;");
+        await database.raw("DELETE FROM Action;");
+        return resolve(true);
+      } catch (err) {
+        return rejects(err);
+      }
+    });
+  };
+
+  return {
+    findBy,
+    insert,
+    remove,
+    findOne,
+    find,
+    update,
+    findIdByFirebaseId,
+    wipeDatabase,
+  };
 };
