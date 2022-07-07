@@ -88,7 +88,7 @@ export const Crud = <ObjectModel>(): CrudType<ObjectModel> => {
   const findOne = (table: string, id: number): Promise<ObjectModel> => {
     return new Promise(async (resolve, rejects) => {
       await database
-        .raw(`SELECT * FROM ${table} WHERE id=${id}`)
+        .raw(`SELECT * FROM ${table} WHERE id='${id}'`)
         .then((res) => {
           return resolve(res[0]);
         })
