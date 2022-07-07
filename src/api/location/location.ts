@@ -16,22 +16,22 @@ export const Location = (): LocationType => {
     forceRollBack?: boolean
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
-      if (location.locationOrder <= 0) rejects("invalid location order");
+      if (location.locationOrder <= 0) return rejects("invalid location order");
       await Mission()
         .findOne(location.idMission)
         .then((res) => {
-          if (res == undefined) rejects("invalid mission");
+          if (res == undefined) return rejects("invalid mission");
         })
         .catch((err) => {
-          rejects("invalid mission");
+          return rejects("invalid mission");
         });
       await crud
         .insert("Location", location, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -49,10 +49,10 @@ export const Location = (): LocationType => {
       await crud
         .remove("Location", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -69,12 +69,12 @@ export const Location = (): LocationType => {
             if (currentAction.id != undefined) {
               actions = await Action().findByLocation(currentAction.id);
               locations.push({ ...res[i], actions: actions });
-            } else rejects("Undefined Location in database");
+            } else return rejects("Undefined Location in database");
           }
-          resolve(locations);
+          return resolve(locations);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -84,7 +84,7 @@ export const Location = (): LocationType => {
       await crud
         .findBy("Location", id, "idMission")
         .then(async (res) => {
-          if (res == undefined) rejects("invalid mission id");
+          if (res == undefined) return rejects("invalid mission id");
           let locations: LocationModelExtended[] = [];
           let actions: ActionModelExtended[];
           for (let i = 0; i < res.length; i++) {
@@ -92,12 +92,12 @@ export const Location = (): LocationType => {
             if (currentAction.id != undefined) {
               actions = await Action().findByLocation(currentAction.id);
               locations.push({ ...res[i], actions: actions });
-            } else rejects("Undefined Location in database");
+            } else return rejects("Undefined Location in database");
           }
-          resolve(locations);
+          return resolve(locations);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -107,17 +107,17 @@ export const Location = (): LocationType => {
       await crud
         .findOne("Location", id)
         .then(async (res) => {
-          if (res == undefined) rejects("invalid location id");
+          if (res == undefined) return rejects("invalid location id");
           let locations: LocationModelExtended = res;
           let actions: ActionModelExtended[];
           if (res.id != undefined) {
             actions = await Action().findByLocation(res.id);
             locations.actions = actions;
           }
-          resolve(locations);
+          return resolve(locations);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -132,27 +132,27 @@ export const Location = (): LocationType => {
       await crud
         .findOne("Location", id)
         .then((res) => {
-          if (res == undefined) rejects("invalid location id");
+          if (res == undefined) return rejects("invalid location id");
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
       // Verifying if mission exists.
       await Mission()
         .findOne(location.idMission)
         .then((res) => {
-          if (res == undefined) rejects("invalid mission");
+          if (res == undefined) return rejects("invalid mission");
         })
         .catch((err) => {
-          rejects("invalid mission");
+          return rejects("invalid mission");
         });
       await crud
         .update("Location", id, location, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };

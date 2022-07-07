@@ -13,16 +13,16 @@ export const User = (): UserType => {
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       const re = /\S+@\S+\.\S+/;
-      if (!re.test(email)) rejects("invalid user email");
-      if (userName.length <= 0) rejects("invalid user name");
-      if (firebaseId.length <= 0) rejects("invalid firebase id");
+      if (!re.test(email)) return rejects("invalid user email");
+      if (userName.length <= 0) return rejects("invalid user name");
+      if (firebaseId.length <= 0) return rejects("invalid firebase id");
       await crud
         .insert("User", { userName, email, firebaseId }, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -43,10 +43,10 @@ export const User = (): UserType => {
       await await crud
         .remove("User", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -56,10 +56,10 @@ export const User = (): UserType => {
       await crud
         .findOne("User", id)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -69,10 +69,10 @@ export const User = (): UserType => {
       await crud
         .find("User")
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -98,10 +98,10 @@ export const User = (): UserType => {
       await crud
         .update("User", id, user, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -111,10 +111,10 @@ export const User = (): UserType => {
       await crud
         .findIdByFirebaseId(firebaseId)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };

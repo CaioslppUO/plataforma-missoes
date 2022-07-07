@@ -15,10 +15,10 @@ router.get("/project", jsonParser, (req: any, res: any) => {
         return res.status(200).json(data);
       })
       .catch((err) => {
-        return res.status(400).send(err);
+        return res.status(400).json(err);
       });
   } catch (err) {
-    return res.status(400).send(err);
+    return res.status(400).json(err);
   }
 });
 

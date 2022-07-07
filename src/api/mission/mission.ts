@@ -20,21 +20,21 @@ export const Mission = (): MissionType => {
         .findOne(mission.idProject)
         .then((res) => {
           if (res == undefined) {
-            rejects("invalid project");
+            return rejects("invalid project");
           }
         })
         .catch((err) => {
-          rejects("invalid project");
+          return rejects("invalid project");
         });
       if (mission.missionOrder < 0) rejects("invalid mission order");
       if (mission.missionName.length <= 0) rejects("invalid mission name");
       await crud
         .insert("Mission", mission, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -47,10 +47,10 @@ export const Mission = (): MissionType => {
       await crud
         .remove("Mission", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -75,10 +75,10 @@ export const Mission = (): MissionType => {
               });
             }
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -88,10 +88,10 @@ export const Mission = (): MissionType => {
       await crud
         .findOne("Mission", id)
         .then(async (mission) => {
-          if (mission == undefined) rejects("invalid mission id");
+          if (mission == undefined) return rejects("invalid mission id");
           if (mission.id) {
             let locations = await Location().findByMission(mission.id);
-            resolve({
+            return resolve({
               id: mission.id,
               missionName: mission.missionName,
               missionOrder: mission.missionOrder,
@@ -101,7 +101,7 @@ export const Mission = (): MissionType => {
           }
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -111,7 +111,7 @@ export const Mission = (): MissionType => {
       await crud
         .findBy("Mission", id, "idProject")
         .then(async (missions) => {
-          if (missions == undefined) rejects("invalid mission id");
+          if (missions == undefined) return rejects("invalid mission id");
           let res: MissionModelExtended[] = [];
           let currentMission;
           for (let i = 0; i < missions.length; i++) {
@@ -127,10 +127,10 @@ export const Mission = (): MissionType => {
               });
             }
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -145,10 +145,10 @@ export const Mission = (): MissionType => {
       await crud
         .findOne("Mission", id)
         .then((res) => {
-          if (res == undefined) rejects("invalid mission id");
+          if (res == undefined) return rejects("invalid mission id");
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
 
       // Verifying if projects exists.
@@ -156,24 +156,25 @@ export const Mission = (): MissionType => {
         .findOne(mission.idProject)
         .then((res) => {
           if (res == undefined) {
-            rejects("invalid project");
+            return rejects("invalid project");
           }
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
 
-      if (mission.missionOrder < 0) rejects("invalid mission order");
+      if (mission.missionOrder < 0) return rejects("invalid mission order");
 
-      if (mission.missionName.length <= 0) rejects("invalid mission name");
+      if (mission.missionName.length <= 0)
+        return rejects("invalid mission name");
 
       await crud
         .update("Mission", id, mission, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };

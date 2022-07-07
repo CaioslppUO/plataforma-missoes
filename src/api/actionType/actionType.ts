@@ -11,16 +11,16 @@ export const ActionType = (): ActionTypeType => {
   ): Promise<number> => {
     return new Promise(async (resolve, rejects) => {
       if (actionType.actionName.length <= 0)
-        rejects("invalid action type name");
+        return rejects("invalid action type name");
       if (actionType.actionDescription.length <= 0)
-        rejects("invalid action type description");
+        return rejects("invalid action type description");
       await crud
         .insert("ActionType", actionType, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -30,10 +30,10 @@ export const ActionType = (): ActionTypeType => {
       await crud
         .remove("ActionType", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -43,10 +43,10 @@ export const ActionType = (): ActionTypeType => {
       await crud
         .find("ActionType")
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -56,10 +56,10 @@ export const ActionType = (): ActionTypeType => {
       await crud
         .findOne("ActionType", id)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -74,25 +74,25 @@ export const ActionType = (): ActionTypeType => {
       await crud
         .findOne("ActionType", id)
         .then((res) => {
-          if (res == undefined) rejects("invalid action type id");
+          if (res == undefined) return rejects("invalid action type id");
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
 
       if (actionType.actionName.length <= 0)
-        rejects("invalid action type name");
+        return rejects("invalid action type name");
 
       if (actionType.actionDescription.length <= 0)
-        rejects("invalid action type description");
+        return rejects("invalid action type description");
 
       await crud
         .update("ActionType", id, actionType, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };

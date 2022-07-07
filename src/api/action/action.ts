@@ -19,26 +19,26 @@ export const Action = (): ACTIONTYPE => {
       await ActionType()
         .findOne(action.idActionType)
         .then((res) => {
-          if (res == undefined) rejects("invalid action type");
+          if (res == undefined) return rejects("invalid action type");
         })
         .catch(() => {
-          rejects("invalid action type");
+          return rejects("invalid action type");
         });
       await Location()
         .findOne(action.idLocation)
         .then((res) => {
-          if (res == undefined) rejects("invalid location");
+          if (res == undefined) return rejects("invalid location");
         })
         .catch(() => {
-          rejects("invalid location");
+          return rejects("invalid location");
         });
       await crud
         .insert("Action", action, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -48,10 +48,10 @@ export const Action = (): ACTIONTYPE => {
       await crud
         .remove("Action", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -61,22 +61,22 @@ export const Action = (): ACTIONTYPE => {
       await crud
         .findOne("Action", id)
         .then(async (action) => {
-          if (action == undefined) rejects("invalid action id");
+          if (action == undefined) return rejects("invalid action id");
           await ActionType()
             .findOne(action.idActionType)
             .then(async (actionType) => {
-              resolve({
+              return resolve({
                 id: action.id,
                 actionType: actionType,
                 idLocation: action.idLocation,
               });
             })
             .catch((err) => {
-              rejects(err);
+              return rejects(err);
             });
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -99,13 +99,13 @@ export const Action = (): ACTIONTYPE => {
                 });
               })
               .catch((err) => {
-                rejects(err);
+                return rejects(err);
               });
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -115,7 +115,7 @@ export const Action = (): ACTIONTYPE => {
       await crud
         .findBy("Action", id, "idLocation")
         .then(async (actions) => {
-          if (actions == undefined) rejects("invalid mission id");
+          if (actions == undefined) return rejects("invalid mission id");
           let res: ActionModelExtended[] = [];
           let actionType = ActionType();
           for (let i = 0; i < actions.length; i++) {
@@ -129,13 +129,13 @@ export const Action = (): ACTIONTYPE => {
                 });
               })
               .catch((err) => {
-                rejects(err);
+                return rejects(err);
               });
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -150,40 +150,40 @@ export const Action = (): ACTIONTYPE => {
       await crud
         .findOne("Action", id)
         .then((res) => {
-          if (res == undefined) rejects("invalid action id");
+          if (res == undefined) return rejects("invalid action id");
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
 
       // Verifying if the actionType exists.
       await ActionType()
         .findOne(action.idActionType)
         .then((res) => {
-          if (res == undefined) rejects("invalid action type");
+          if (res == undefined) return rejects("invalid action type");
         })
         .catch(() => {
-          rejects("invalid action type");
+          return rejects("invalid action type");
         });
 
       // Verifying if the location exists.
       await Location()
         .findOne(action.idLocation)
         .then((res) => {
-          if (res == undefined) rejects("invalid location");
+          if (res == undefined) return rejects("invalid location");
         })
         .catch(() => {
-          rejects("invalid location");
+          return rejects("invalid location");
         });
 
       // Updating the action
       await crud
         .update("Action", id, action, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };

@@ -18,10 +18,11 @@ export const Project = (): ProjectType => {
       await User()
         .findOne(project.idUser)
         .then((res) => {
-          if (res == undefined) rejects("invalid user id");
+          console.log("caiu aqui");
+          if (res == undefined) return rejects("invalid user id");
         })
         .catch(() => {
-          rejects("invalid user id");
+          return rejects("invalid user id");
         });
       let year = project.projectDate.split("-")[0];
       let month = project.projectDate.split("-")[1];
@@ -35,15 +36,16 @@ export const Project = (): ProjectType => {
         Number(day) > 31 ||
         Number(day) <= 0
       )
-        rejects("invalid date");
-      if (project.projectName.length <= 0) rejects("invalid project name");
+        return rejects("invalid date");
+      if (project.projectName.length <= 0)
+        return rejects("invalid project name");
       await crud
         .insert("Project", project, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -64,10 +66,10 @@ export const Project = (): ProjectType => {
       await crud
         .remove("Project", id, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -77,7 +79,7 @@ export const Project = (): ProjectType => {
       await crud
         .findOne("Project", id)
         .then(async (project) => {
-          if (project == undefined) rejects("invalid project id");
+          if (project == undefined) return rejects("invalid project id");
           let missions = await Mission().find();
           let specificMissions = [];
           for (let j = 0; j < missions.length; j++) {
@@ -98,10 +100,10 @@ export const Project = (): ProjectType => {
             },
             missions: specificMissions,
           };
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -135,10 +137,10 @@ export const Project = (): ProjectType => {
             });
             specificMissions = [];
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -174,10 +176,10 @@ export const Project = (): ProjectType => {
             }
             specificMissions = [];
           }
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
@@ -191,18 +193,18 @@ export const Project = (): ProjectType => {
       await crud
         .findOne("Project", id)
         .then((res) => {
-          if (res == undefined) rejects("invalid project id");
+          if (res == undefined) return rejects("invalid project id");
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
       await User()
         .findOne(project.idUser)
         .then((res) => {
-          if (res == undefined) rejects("invalid user id");
+          if (res == undefined) return rejects("invalid user id");
         })
         .catch(() => {
-          rejects("invalid user id");
+          return rejects("invalid user id");
         });
       let year = project.projectDate.split("-")[0];
       let month = project.projectDate.split("-")[1];
@@ -216,15 +218,15 @@ export const Project = (): ProjectType => {
         Number(day) > 31 ||
         Number(day) <= 0
       )
-        rejects("invalid date");
+        return rejects("invalid date");
       if (project.projectName.length <= 0) rejects("invalid project name");
       await crud
         .update("Project", id, project, forceRollBack)
         .then((res) => {
-          resolve(res);
+          return resolve(res);
         })
         .catch((err) => {
-          rejects(err);
+          return rejects(err);
         });
     });
   };
